@@ -1,0 +1,23 @@
+{
+  "name": "asm",
+  "version": "1.0.0",
+  "description": "Assignment PHP2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huthoinguyn/asm_php2.git"
+  },
+  "author": "huthoinguyn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huthoinguyn/asm_php2/issues"
+  },
+  "homepage": "https://github.com/huthoinguyn/asm_php2#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.2.7"
+  }
+}
