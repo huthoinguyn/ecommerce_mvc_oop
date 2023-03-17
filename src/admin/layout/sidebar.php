@@ -24,9 +24,9 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="product.php">
 					<i class='bx bxs-message-dots'></i>
-					<span class="text">Message</span>
+					<span class="text">Product</span>
 				</a>
 			</li>
 			<li>

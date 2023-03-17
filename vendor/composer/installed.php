@@ -3,7 +3,7 @@
         'name' => 'app/thoainhpc04496',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4ff08a54cb48e59b339b02847d044c5dbcf3823e',
+        'reference' => '26cf7210450d894a0c67d327005c68952aaa26c6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'app/thoainhpc04496' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4ff08a54cb48e59b339b02847d044c5dbcf3823e',
+            'reference' => '26cf7210450d894a0c67d327005c68952aaa26c6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
