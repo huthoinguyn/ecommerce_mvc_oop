@@ -42,6 +42,12 @@ class category
         $result = $this->db->select($query);
         return $result;
     }
+    public function show_category_client()
+    {
+        $query = "SELECT * FROM tbl_category WHERE state = 1 ORDER BY id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
 
     public function select_cat_by_id($catId)
     {

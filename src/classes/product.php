@@ -67,6 +67,24 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
+    public function show_product_by_cat($catId)
+    {
+        $query = "SELECT * FROM tbl_product WHERE catId = '" . $catId . "' ORDER BY id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function product_details($prodId)
+    {
+        $query = "SELECT p.id, p.name AS prodName,c.name AS catName, b.name AS brandName , p.price, p.type, p.image, p.description, c.id AS catId
+        FROM tbl_product AS p 
+        INNER JOIN tbl_category AS c ON p.catId = c.id 
+        INNER JOIN tbl_brand AS b ON p.brandId = b.id
+        WHERE p.id = '" . $prodId . "' LIMIT 1";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
 
     public function update_product($data, $files, $id)
     {

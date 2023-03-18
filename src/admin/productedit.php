@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     if ($catList) {
                                         while ($ct = $catList->fetch_assoc()) {
                                     ?>
-                                            <option <?= $p['catId'] == $ct['id'] ?? "selected" ?> value="<?= $ct['id'] ?>"><?= $ct['name'] ?></option>
+                                            <option <?= $p['catId'] == $ct['id'] ? "selected" : "" ?> value="<?= $ct['id'] ?>"><?= $ct['name'] ?></option>
 
                                     <?php
                                         }
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     if ($brandList) {
                                         while ($br = $brandList->fetch_assoc()) {
                                     ?>
-                                            <option <?= $p['brandId'] == $br['id'] ?? "selected" ?> value="<?= $br['id'] ?>"><?= $br['name'] ?></option>
+                                            <option <?= $p['brandId'] == $br['id'] ? "selected" : "" ?> value="<?= $br['id'] ?>"><?= $br['name'] ?></option>
 
                                     <?php
                                         }

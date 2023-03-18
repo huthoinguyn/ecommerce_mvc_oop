@@ -22,7 +22,7 @@ if (isset($_GET['prodId'])) {
                 <h2 class="text-2xl font-semibold leading-tight">Product List</h2>
             </div>
             <?php
-            if(isset($delPd)){
+            if (isset($delPd)) {
                 echo $delPd;
             }
             ?>
@@ -77,10 +77,10 @@ if (isset($_GET['prodId'])) {
                                                 <img class="w-full h-full object-cover" src="uploads/<?= $p['image'] ?>" alt="" />
                                             </div>
                                             <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap line-clamp-2">
+                                                <p class="text-gray-900 whitespace-no-wrap">
                                                 <div class="flex">
-                                                    <span class=""></span>
-                                                    <?= $p['prodName'] ?>
+                                                    <span class="line-clamp-2">
+                                                        <?= $p['prodName'] ?>
                                                     </span>
                                                 </div>
                                                 </p>
@@ -97,7 +97,7 @@ if (isset($_GET['prodId'])) {
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <?= $p['type'] == 1 ? "Featured" : "Non-Featured" ?>
-                                        
+
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                         <a href="productedit.php?prodId=<?= $p['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="?prodId=<?= $p['id'] ?>">Delete</a>

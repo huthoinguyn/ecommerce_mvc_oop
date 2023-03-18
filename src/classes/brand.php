@@ -42,6 +42,12 @@ class brand
         $result = $this->db->select($query);
         return $result;
     }
+    public function show_brand_client()
+    {
+        $query = "SELECT * FROM tbl_brand WHERE state = 1 ORDER BY id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
 
     public function select_brand_by_id($brandId)
     {
