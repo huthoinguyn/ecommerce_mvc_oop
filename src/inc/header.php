@@ -1,4 +1,13 @@
 <?php
+
+include "lib/session.php";
+Session::checkSession();
+
+header("Cache-Control: no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+header("Cache-Control: max-age=2592000");
+
 spl_autoload_register(function ($class) {
     include_once "classes/" . $class . ".php";
 })
@@ -8,6 +17,7 @@ spl_autoload_register(function ($class) {
 $pd = new product();
 $cat = new category();
 $brand = new brand();
+$cart = new cart();
 ?>
 
 <!DOCTYPE html>
@@ -61,8 +71,17 @@ $brand = new brand();
                         </div>
                         <div class="text-xs leading-3">Wish List</div>
                     </a>
-                    <a onclick="checkoutHandler(false)" class="lg:block text-center text-gray-700 hover:text-primary transition hidden relative">
-                        <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">3</span>
+                    <a href="cart.php" class="lg:block text-center text-gray-700 hover:text-primary transition hidden relative">
+                        <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
+                            <?php
+                            $cartCount = $cart->cart_count();
+                            if (isset($cartCount)) {
+                                while ($cc = $cartCount->fetch_assoc()) {
+                                    echo $cc['cartCount'];
+                                }
+                            }
+                            ?>
+                        </span>
                         <div class="text-2xl">
                             <i class="fas fa-shopping-bag"></i>
                         </div>

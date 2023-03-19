@@ -1,7 +1,6 @@
 <?php
 include "inc/header.php";
 include "inc/navbar.php";
-include "cart.php";
 ?>
 
 <!-- breadcrumb -->
@@ -147,7 +146,7 @@ include "cart.php";
                                 </h4>
                             </a>
                             <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                                <p class="text-xl text-primary font-roboto font-semibold"><?= $p['price'] ?></p>
+                                <p class="text-xl text-primary font-roboto font-semibold">$<?= $p['price'] ?></p>
                                 <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                             </div>
                             <div class="group-hover:hidden flex items-center">
@@ -161,8 +160,8 @@ include "cart.php";
                                 <div class="text-xs text-gray-500 ml-3">(150)</div>
                             </div>
                             <!-- product button -->
-                            <a href="details.php?prodId=<?= $p['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-                                Add to Cart
+                            <a href="details.php?prodId=<?= $p['id'] ?>" class="view-details">
+                                Details
                             </a>
                             <!-- product button end -->
                         </div>
