@@ -55,8 +55,8 @@ if (isset($_GET['cartId'])) {
             ?>
                     <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
-                            <div class="w-32 h-24 overflow-hidden">
-                                <img class="w-full h-full object-cover" src="admin/uploads/<?= $cs['image'] ?>" alt="">
+                            <div class=" h-24 overflow-hidden">
+                                <img class="w-32 h-full object-cover" src="admin/uploads/<?= $cs['image'] ?>" alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">
@@ -75,8 +75,8 @@ if (isset($_GET['cartId'])) {
                                 <input onchange="this.form.submit()" class="mx-2 pl-2 pr-1 py-2 border text-center w-16" name="quantity" type="number" min="0" value="<?= $cs['quantity'] ?>">
                             </form>
                         </div>
-                        <span class="text-center w-1/5 font-semibold text-sm">$<?= $cs['price'] ?></span>
-                        <span class="text-center w-1/5 font-semibold text-sm">$<?= $cs['price'] * $cs['quantity'] ?></span>
+                        <span class="text-center w-1/5 font-semibold text-sm">$<?= number_format($cs['price'], 2) ?></span>
+                        <span class="text-center w-1/5 font-semibold text-sm">$<?= number_format($cs['price'] * $cs['quantity'], 2) ?></span>
                     </div>
             <?php
                 }
@@ -98,7 +98,7 @@ if (isset($_GET['cartId'])) {
             <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
             <div class="flex justify-between mt-10 mb-5">
                 <span class="font-semibold text-sm uppercase">Subtotal</span>
-                <span class="font-semibold text-sm">$<?= $subTotal ?></span>
+                <span class="font-semibold text-sm">$<?= number_format($subTotal, 2) ?></span>
             </div>
             <div>
                 <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -114,7 +114,7 @@ if (isset($_GET['cartId'])) {
             <div class="border-t mt-8">
                 <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                     <span>Total cost</span>
-                    <span>$<?= $subTotal != 0 ? $subTotal + 10 : $subTotal ?></span>
+                    <span>$<?= number_format($subTotal != 0 ? $subTotal + 10 : $subTotal, 2) ?></span>
                 </div>
                 <button class="bg-primary font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
             </div>

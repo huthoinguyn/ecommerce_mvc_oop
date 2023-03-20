@@ -146,7 +146,7 @@ include "inc/navbar.php";
                                 </h4>
                             </a>
                             <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                                <p class="text-xl text-primary font-roboto font-semibold">$<?= $p['price'] ?></p>
+                                <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($p['price'],2) ?></p>
                                 <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                             </div>
                             <div class="group-hover:hidden flex items-center">

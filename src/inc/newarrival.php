@@ -1,6 +1,6 @@
  <!-- top new arrival -->
- <div class="container pb-16">
-     <h2 class="flex text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">top new arrival</h2>
+ <div class="container pb-16 mt-8">
+     <h2 class="flex text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">new arrival</h2>
      <!-- product wrapper -->
      <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-6 auto-rows-fr">
          <?php
@@ -31,7 +31,7 @@
                              </h4>
                          </a>
                          <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                             <p class="text-xl text-primary font-roboto font-semibold">$<?= $pna['price'] ?></p>
+                             <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($pna['price'],2) ?></p>
                              <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                          </div>
                          <div class="group-hover:hidden flex items-center">
@@ -46,7 +46,7 @@
                          </div>
                          <!-- product button -->
                          <a href="details.php?prodId=<?= $pna['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-                             Add to Cart
+                             View Details
                          </a>
                          <!-- product button end -->
                      </div>

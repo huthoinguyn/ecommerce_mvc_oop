@@ -37,7 +37,7 @@
                     <a href="#" class="text-gray-200 hover:text-white transition">About us</a>
                     <a href="#" class="text-gray-200 hover:text-white transition">Contact us</a>
                 </div>
-                <a href="login.html" class="ml-auto justify-self-end text-gray-200 hover:text-white transition">
+                <a href="login.php" class="ml-auto justify-self-end text-gray-200 hover:text-white transition">
                     Login/Register
                 </a>
             </div>

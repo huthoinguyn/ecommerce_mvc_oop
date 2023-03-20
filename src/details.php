@@ -77,7 +77,7 @@ if ($prodSelectById) {
                         <div>
                             <div class="rounded-lg bg-gray-100 flex py-2 px-3">
                                 <span class="text-red-400 mr-1 mt-1 text-lg">$</span>
-                                <span class="font-bold text-primary text-3xl"><?= $ps['price'] ?></span>
+                                <span class="font-bold text-primary text-3xl"><?= number_format($ps['price'],2) ?></span>
                             </div>
                         </div>
                         <!-- <div class="flex-1">
@@ -85,8 +85,6 @@ if ($prodSelectById) {
                             <p class="text-gray-400 text-sm">Inclusive of all Taxes.</p>
                         </div> -->
                     </div>
-                    <!-- <p class="text-3xl text-primary font-semibold"></p> -->
-                    <!-- <p class="text-base text-gray-400 line-through">$123</p> -->
                 </div>
 
                 <p class="text-gray-600 line-clamp-4">
@@ -194,7 +192,7 @@ if ($prodSelectById) {
                             </h4>
                         </a>
                         <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                            <p class="text-xl text-primary font-roboto font-semibold"><?= $pc['price'] ?></p>
+                            <p class="text-xl text-primary font-roboto font-semibold"><?= number_format($pc['price'],2) ?></p>
                             <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                         </div>
                         <div class="group-hover:hidden flex items-center">

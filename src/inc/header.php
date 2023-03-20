@@ -64,7 +64,7 @@ $cart = new cart();
 
                 <!-- navicons -->
                 <div class="space-x-4 flex items-center">
-                    <a href="wishlist.html" class="block text-center text-gray-700 hover:text-primary transition relative">
+                    <a href="wishlist.php" class="block text-center text-gray-700 hover:text-primary transition relative">
                         <span class="absolute -right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">5</span>
                         <div class="text-2xl">
                             <i class="far fa-heart"></i>
@@ -87,7 +87,7 @@ $cart = new cart();
                         </div>
                         <div class="text-xs leading-3">Cart</div>
                     </a>
-                    <a href="account.html" class="block text-center text-gray-700 hover:text-primary transition">
+                    <a href="account.php" class="block text-center text-gray-700 hover:text-primary transition">
                         <div class="text-2xl">
                             <i class="far fa-user"></i>
                         </div>
