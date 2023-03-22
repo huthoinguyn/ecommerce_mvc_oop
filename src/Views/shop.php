@@ -1,11 +1,11 @@
 <?php
-include "inc/header.php";
-include "inc/navbar.php";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/navbar.php";
 ?>
 
 <!-- breadcrumb -->
 <div class="container py-4 flex items-center gap-3">
-    <a href="../index.html" class="text-primary text-base">
+    <a href="../index.php" class="text-primary text-base">
         <i class="fa-solid fa-house"></i>
     </a>
     <span class="text-sm text-gray-400">
@@ -23,10 +23,10 @@ include "inc/navbar.php";
             <div>
                 <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
                 <div class="space-y-2">
+                    <!-- Cat -->
                     <?php
-                    $catClient = $cat->show_category_client();
-                    if ($catClient) {
-                        while ($cc = $catClient->fetch_assoc()) {
+                    if ($data['cats']) {
+                        foreach ($data['cats'] as $cc) {
                     ?>
                             <div class="flex items-center">
                                 <input type="checkbox" name="cat-1" id="cat-1" class="text-primary focus:ring-0 rounded-sm cursor-pointer">
@@ -37,17 +37,16 @@ include "inc/navbar.php";
                         }
                     }
                     ?>
-
                 </div>
             </div>
 
             <div class="pt-4">
                 <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Brands</h3>
                 <div class="space-y-2">
+                    <!-- Brand -->
                     <?php
-                    $brandClient = $brand->show_brand_client();
-                    if ($brandClient) {
-                        while ($br = $brandClient->fetch_assoc()) {
+                    if ($data['brands']) {
+                        foreach ($data['brands'] as $br) {
                     ?>
                             <div class="flex items-center">
                                 <input type="checkbox" name="brand-1" id="brand-1" class="text-primary focus:ring-0 rounded-sm cursor-pointer">
@@ -119,15 +118,14 @@ include "inc/navbar.php";
 
         <div class="grid grid-cols-3 gap-6 auto-rows-fr">
             <?php
-            $prodList = $pd->show_product();
-            if ($prodList) {
-                while ($p = $prodList->fetch_assoc()) {
+            if ($data['products']) {
+                foreach ($data['products'] as $p) {
             ?>
                     <!-- single product -->
                     <div class="group rounded bg-white shadow overflow-hidden flex-shrink-0">
                         <!-- product image -->
                         <div class="relative h-[240px] overflow-hidden z-0">
-                            <img zin src="admin/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
+                            <img zin src="src/admin/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                                 <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
                                     <i class="fas fa-search"></i>
@@ -140,13 +138,13 @@ include "inc/navbar.php";
                         <!-- product image end -->
                         <!-- product content -->
                         <div class="pt-4 pb-3 px-4">
-                            <a href="details.php?prodId=<?= $p['id'] ?>">
+                            <a href="/details?prodId=<?= $p['id'] ?>">
                                 <h4 class="uppercase font-medium text-lg mb-2 text-gray-800 hover:text-primary transition line-clamp-2">
-                                    <?= $p['prodName'] ?>
+                                    <?= $p['name'] ?>
                                 </h4>
                             </a>
                             <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                                <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($p['price'],2) ?></p>
+                                <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($p['price'], 2) ?></p>
                                 <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                             </div>
                             <div class="group-hover:hidden flex items-center">
@@ -160,7 +158,7 @@ include "inc/navbar.php";
                                 <div class="text-xs text-gray-500 ml-3">(150)</div>
                             </div>
                             <!-- product button -->
-                            <a href="details.php?prodId=<?= $p['id'] ?>" class="view-details">
+                            <a href="/details/prodId=<?= $p['id'] ?>" class="view-details">
                                 Details
                             </a>
                             <!-- product button end -->
@@ -178,6 +176,6 @@ include "inc/navbar.php";
     <!-- ./shop wrapper -->
 
     <?php
-    include "inc/footer.php";
+    include __DIR__ . "/inc/footer.php";
 
     ?>

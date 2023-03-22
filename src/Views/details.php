@@ -1,19 +1,7 @@
 <?php
-include "inc/header.php";
-include "inc/navbar.php";
-?>
 
-<?php
-if (!isset($_GET['prodId']) || $_GET['prodId'] == null) {
-    echo "<script>window.location='shop.php'</script>";
-} else {
-    $prodId = $_GET['prodId'];
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $quantity = $_POST['quantity'];
-    $addCart = $cart->add_to_cart($quantity, $prodId);
-}
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/navbar.php";
 ?>
 
 <!-- breadcrumb -->
@@ -29,21 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 <!-- ./breadcrumb -->
 
 <?php
-$catId = null;
+// $catId = null;
 
-$prodSelectById = $pd->product_details($prodId);
+$prodSelectById = $data['details'];
 if ($prodSelectById) {
-    while ($ps = $prodSelectById->fetch_assoc()) {
-        $catId = $ps['catId'];
+    foreach ($prodSelectById as $ps) {
+        // $catId = $ps['catId'];
 ?>
         <!-- product-detail -->
         <div class="container grid grid-cols-2 gap-6 auto-rows-fr">
             <div>
-                <img src="admin/uploads/<?= $ps['image'] ?>" alt="product" class="w-full">
+                <img src="src/admin/uploads/<?= $ps['image'] ?>" alt="product" class="w-full">
             </div>
 
             <div>
-                <h2 class="text-3xl font-medium uppercase mb-2"><?= $ps['prodName'] ?></h2>
+                <h2 class="text-3xl font-medium uppercase mb-2"><?= $ps['name'] ?></h2>
                 <div class="flex items-center mb-4">
                     <div class="flex gap-1 text-sm text-yellow-400">
                         <span><i class="fa-solid fa-star"></i></span>
@@ -61,11 +49,13 @@ if ($prodSelectById) {
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Brand: </span>
-                        <span class="text-gray-600"><?= $ps['brandName'] ?></span>
+                        <span class="text-gray-600"><?php //$ps['brandName'] 
+                                                    ?></span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Category: </span>
-                        <span class="text-gray-600"><?= $ps['catName'] ?></span>
+                        <span class="text-gray-600"><?php //$ps['catName'] 
+                                                    ?></span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">SKU: </span>
@@ -77,7 +67,7 @@ if ($prodSelectById) {
                         <div>
                             <div class="rounded-lg bg-gray-100 flex py-2 px-3">
                                 <span class="text-red-400 mr-1 mt-1 text-lg">$</span>
-                                <span class="font-bold text-primary text-3xl"><?= number_format($ps['price'],2) ?></span>
+                                <span class="font-bold text-primary text-3xl"><?= number_format($ps['price'], 2) ?></span>
                             </div>
                         </div>
                         <!-- <div class="flex-1">
@@ -161,70 +151,9 @@ if ($prodSelectById) {
     }
 }
 ?>
-<!-- related product -->
-<div class="container pb-16">
-    <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">Related products</h2>
-    <div class="grid grid-cols-4 gap-6 auto-rows-fr">
-        <?php
-        $prodList = $pd->show_product_by_cat($catId);
-        if ($prodList) {
-            while ($pc = $prodList->fetch_assoc()) {
-        ?>
-                <div class="group rounded bg-white shadow overflow-hidden">
-                    <!-- product image -->
-                    <div class="relative h-[240px] overflow-hidden z-0">
-                        <img zin src="admin/uploads/<?= $pc['image'] ?>" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                            <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
-                                <i class="fas fa-search"></i>
-                            </a>
-                            <a href="#" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
-                                <i class="far fa-heart"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- product image end -->
-                    <!-- product content -->
-                    <div class="pt-4 pb-3 px-4">
-                        <a href="details.php?prodId=<?= $pc['id'] ?>">
-                            <h4 class="uppercase font-medium text-lg mb-2 text-gray-800 hover:text-primary transition line-clamp-2">
-                                <?= $pc['name'] ?>
-                            </h4>
-                        </a>
-                        <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                            <p class="text-xl text-primary font-roboto font-semibold"><?= number_format($pc['price'],2) ?></p>
-                            <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
-                        </div>
-                        <div class="group-hover:hidden flex items-center">
-                            <div class="flex gap-1 text-sm text-yellow-400">
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </div>
-                            <div class="text-xs text-gray-500 ml-3">(150)</div>
-                        </div>
-                        <!-- product button -->
-                        <a href="details.php?prodId=<?= $pc['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-                            Add to Cart
-                        </a>
-                        <!-- product button end -->
-                    </div>
-                    <!-- product content end -->
-
-                </div>
-                <!-- single product end -->
-        <?php
-            }
-        }
-        ?>
-    </div>
-</div>
-<!-- ./related product -->
 
 
 <?php
-include "inc/footer.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>

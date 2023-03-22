@@ -1,8 +1,7 @@
 <?php
-include "inc/header.php";
-include "inc/navbar.php";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/navbar.php";
 ?>
-
 <!-- login -->
 <div class="contain py-16">
     <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
@@ -10,11 +9,11 @@ include "inc/navbar.php";
         <p class="text-gray-600 mb-6 text-sm">
             welcome back customer
         </p>
-        <form action="#" method="post" autocomplete="off">
+        <form action="/post-login" method="POST" autocomplete="off">
             <div class="space-y-2">
                 <div>
-                    <label for="email" class="text-gray-600 mb-2 block">Email address</label>
-                    <input type="email" name="email" id="email" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="youremail.@domain.com">
+                    <label for="username" class="text-gray-600 mb-2 block">Email address</label>
+                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="youremail.@domain.com">
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 block">Password</label>
@@ -29,7 +28,7 @@ include "inc/navbar.php";
                 <a href="#" class="text-primary">Forgot password</a>
             </div>
             <div class="mt-4">
-                <button type="submit" class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button>
+                <button type="submit" name="submit" class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button>
             </div>
         </form>
 
@@ -44,13 +43,13 @@ include "inc/navbar.php";
         </div>
         <!-- ./login with -->
 
-        <p class="mt-4 text-center text-gray-600">Don't have account? <a href="register.php" class="text-primary">Register
+        <p class="mt-4 text-center text-gray-600">Don't have account? <a href="/register" class="text-primary">Register
                 now</a></p>
     </div>
 </div>
 <!-- ./login -->
 
 <?php
-include "inc/footer.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>

@@ -1,23 +1,12 @@
 <?php
-
-include "lib/session.php";
-Session::checkSession();
-
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 header("Cache-Control: max-age=2592000");
 
-spl_autoload_register(function ($class) {
-    include_once "classes/" . $class . ".php";
-})
-?>
-
-<?php
-$pd = new product();
-$cat = new category();
-$brand = new brand();
-$cart = new cart();
+// spl_autoload_register(function ($class) {
+//     include_once "classes/" . $class . ".php";
+// })
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +19,7 @@ $cart = new cart();
     <title>T-Store</title>
     <link rel="canonical" href="https://tailwinduikit.com/components/E-commerce/Components/shopping%20carts">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/output.css">
+    <link rel="stylesheet" href="src/assets/css/output.css">
 
 </head>
 
@@ -40,7 +29,7 @@ $cart = new cart();
         <header class="py-4 shadow-sm bg-pink-100 lg:bg-white">
             <div class="container flex items-center justify-between">
                 <!-- logo -->
-                <a href="index.php" class="text-3xl font-bold">
+                <a href="/" class="text-3xl font-bold">
                     <span class="text-red-400">
                         T
                     </span>
@@ -71,16 +60,17 @@ $cart = new cart();
                         </div>
                         <div class="text-xs leading-3">Wish List</div>
                     </a>
-                    <a href="cart.php" class="lg:block text-center text-gray-700 hover:text-primary transition hidden relative">
+                    <a href="/cart" class="lg:block text-center text-gray-700 hover:text-primary transition hidden relative">
                         <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
                             <?php
-                            $cartCount = $cart->cart_count();
-                            if (isset($cartCount)) {
-                                while ($cc = $cartCount->fetch_assoc()) {
-                                    echo $cc['cartCount'];
-                                }
-                            }
+                            // $cartCount = $cart->cart_count();
+                            // if (isset($cartCount)) {
+                            //     while ($cc = $cartCount->fetch_assoc()) {
+                            //         echo $cc['cartCount'];
+                            //     }
+                            // }
                             ?>
+                            3
                         </span>
                         <div class="text-2xl">
                             <i class="fas fa-shopping-bag"></i>

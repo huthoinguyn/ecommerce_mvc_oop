@@ -1,6 +1,6 @@
 <?php
-include "inc/header.php";
-include "inc/navbar.php";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/navbar.php";
 ?>
 
 <div class="contain py-16">
@@ -56,6 +56,6 @@ include "inc/navbar.php";
 </div>
 
 <?php
-include "inc/footer.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>

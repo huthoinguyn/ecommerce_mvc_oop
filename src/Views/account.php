@@ -1,7 +1,8 @@
 <?php
-include "inc/header.php";
-include "inc/navbar.php";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/navbar.php";
 ?>
+
 <!-- breadcrumb -->
 <div class="container py-4 flex items-center gap-3">
     <a href="../index.html" class="text-primary text-base">
@@ -148,6 +149,6 @@ include "inc/navbar.php";
 <!-- ./account wrapper -->
 
 <?php
-include "inc/footer.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>

@@ -1,7 +1,6 @@
 <?php
-/**
-*Session Class
-**/
+namespace App\Controllers;
+
 class Session{
  public static function init(){
   if (version_compare(phpversion(), '5.4.0', '<')) {
@@ -31,20 +30,20 @@ class Session{
     self::init();
     if (self::get("userLogin")== false) {
      self::destroy();
-     header("Location: login.php");
+     header("Location: /login");
     }
  }
 
  public static function checkLogin(){
     self::init();
     if (self::get("userLogin")== true) {
-     header("Location: index.php");
+     header("Location: /");
     }
  }
 
  public static function destroy(){
   session_destroy();
-  header("Location: login.php");
+  header("Location: /login");
  }
 }
 ?>

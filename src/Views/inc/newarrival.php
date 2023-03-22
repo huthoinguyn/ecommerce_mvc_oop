@@ -4,15 +4,14 @@
      <!-- product wrapper -->
      <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-6 auto-rows-fr">
          <?php
-            $newarrival = $pd->show_new_product();
-            if ($newarrival) {
-                while ($pna = $newarrival->fetch_assoc()) {
+            if ($data['newArrival']) {
+                foreach ($data['newArrival'] as $pna) {
             ?>
                  <!-- single product -->
                  <div class="group rounded bg-white shadow overflow-hidden">
                      <!-- product image -->
                      <div class="relative h-[240px] overflow-hidden">
-                         <img src="admin/uploads/<?= $pna['image'] ?>" class="w-full h-full object-cover">
+                         <img src="src/admin/uploads/<?= $pna['image'] ?>" class="w-full h-full object-cover">
                          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                              <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
                                  <i class="fas fa-search"></i>
@@ -25,13 +24,13 @@
                      <!-- product image end -->
                      <!-- product content -->
                      <div class="pt-4 pb-3 px-4">
-                         <a href="details.php?prodId=<?= $pna['id'] ?>">
+                         <a href="details/prodId=<?= $pna['id'] ?>">
                              <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition line-clamp-2">
                                  <?= $pna['name'] ?>
                              </h4>
                          </a>
                          <div class="group-hover:hidden flex items-baseline mb-1 space-x-2">
-                             <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($pna['price'],2) ?></p>
+                             <p class="text-xl text-primary font-roboto font-semibold">$<?= number_format($pna['price'], 2) ?></p>
                              <!-- <p class="text-sm text-gray-400 font-roboto line-through">$55.00</p> -->
                          </div>
                          <div class="group-hover:hidden flex items-center">
@@ -45,7 +44,7 @@
                              <div class="text-xs text-gray-500 ml-3">(150)</div>
                          </div>
                          <!-- product button -->
-                         <a href="details.php?prodId=<?= $pna['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
+                         <a href="details/prodId=<?= $pna['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
                              View Details
                          </a>
                          <!-- product button end -->

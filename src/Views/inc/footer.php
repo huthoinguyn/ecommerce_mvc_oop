@@ -79,7 +79,7 @@
     <div class="container flex items-center justify-between">
         <p class="text-white">&copy; Huthoinguyn - All Right Reserved</p>
         <div>
-            <img src="assets/img/methods.png" alt="methods" class="h-5">
+            <img src="src/assets/img/methods.png" alt="methods" class="h-5">
         </div>
     </div>
 </div>
