@@ -92,6 +92,6 @@ include __DIR__ . "/inc/navbar.php";
     </div>
 </div>
 <?php
-include "inc/footer.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>

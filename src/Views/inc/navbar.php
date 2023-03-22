@@ -9,9 +9,7 @@
                     <i class="fas fa-bars"></i>
                 </span>
                 <span class="capitalize ml-2 text-white">All categories</span>
-
                 <div class="absolute left-0 top-full w-full bg-white shadow-md py-3 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition duration-300 z-50 divide-y divide-gray-300 divide-dashed">
-
                 </div>
             </div>
             <!-- all category end -->
@@ -24,20 +22,24 @@
                     <a href="/" class="text-gray-200 hover:text-white transition">About us</a>
                     <a href="/" class="text-gray-200 hover:text-white transition">Contact us</a>
                 </div>
-                <?php
-                if (isset($_SESSION['user'])) {
-                    foreach ($_SESSION['user'] as $user) {
-                        echo "<span class='text-white'>" . $user['name'] . "</span>";
-                    }
-                } else {
-                ?>
-                    <a href="/login" class="ml-auto justify-self-end text-gray-200 hover:text-white transition">
-                        Login/Register
-                    </a>
+                <div class="flex">
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                        foreach ($_SESSION['user'] as $user) {
+                            echo "  <span class='text-white'> " . $user['name'] . " </span>";
+                            echo "  <a href='/logout' class='text-white'>  Log out  </a>";
+                        }
+                    } else {
+                    ?>
+                        <a href="/login" class="ml-auto justify-self-end text-gray-200 hover:text-white transition">
+                            Login/Register
+                        </a>
 
-                <?php
-                }
-                ?>
+                    <?php
+                    }
+                    ?>
+
+                </div>
             </div>
             <!-- nav menu end -->
 

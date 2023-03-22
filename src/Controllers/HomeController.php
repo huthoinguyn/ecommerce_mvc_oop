@@ -19,4 +19,8 @@ class HomeController extends BaseController
         ];
         return $this->render('home', $data);
     }
+    public function notFound()
+    {
+        return $this->render('404');
+    }
 }

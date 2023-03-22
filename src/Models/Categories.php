@@ -69,8 +69,16 @@ class Categories extends BaseModel
 
 
     // Xem bài đăng
-    public function viewCategoryClient($fields, $conditions, $order, $limit)
+    public function viewCategoryClient($fields, $order, $limit = 0)
     {
+        $conditions = [
+            "state" => 1
+        ];
+        return $this->readData($this->table, $fields, $conditions, $order, $limit);
+    }
+    public function viewCategoryAdmin($fields, $order, $limit = 0)
+    {
+        $conditions = [];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
 }

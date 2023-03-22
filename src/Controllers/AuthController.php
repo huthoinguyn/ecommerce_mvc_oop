@@ -27,14 +27,16 @@ class AuthController extends BaseController
         if (isset($checkLogin)) {
             $_SESSION['checkLogin'] = true;
             $_SESSION['user'] = $checkLogin;
-            $this->render('/login-success', $data);
+            $this->render('login-success', $data);
         } else {
-            $this->render('/login', $data);
+            $this->render('login', $data);
         }
     }
 
-    public function getLogot()
+    public function getLogout()
     {
-        echo "hé lô";
+        $_SESSION['checkLogin'] = false;
+        unset($_SESSION['user']);
+        header('Location: /');
     }
 }

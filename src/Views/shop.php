@@ -118,8 +118,8 @@ include __DIR__ . "/inc/navbar.php";
 
         <div class="grid grid-cols-3 gap-6 auto-rows-fr">
             <?php
-            if ($data['products']) {
-                foreach ($data['products'] as $p) {
+            if ($data['prods']) {
+                foreach ($data['prods'] as $p) {
             ?>
                     <!-- single product -->
                     <div class="group rounded bg-white shadow overflow-hidden flex-shrink-0">

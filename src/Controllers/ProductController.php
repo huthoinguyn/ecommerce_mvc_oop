@@ -13,14 +13,14 @@ class ProductController extends BaseController
     {
         $pd = new Products();
         $cat = new Categories();
-        $cats = $cat->viewCategoryClient(['id', 'name', 'state'], ['state' => '1'], '', 0);
+        $cats = $cat->viewCategoryClient(['id', 'name', 'state'], '', 0);
         $brand = new Brands();
         $brands = $brand->viewBrandClient(['id', 'name', 'state'], ['state' => '1'], '', 0);
         $prods = $pd->viewProducts(['id', 'name', 'price', 'image', 'description', 'catId', 'brandId', 'type'], [], 'id ASC', 0);
         $data = [
-            $prods,
-            $cats,
-            $brands,
+            "prods" => $prods,
+            "cats" => $cats,
+            "brands" => $brands,
         ];
         return $this->render('shop', $data);
     }

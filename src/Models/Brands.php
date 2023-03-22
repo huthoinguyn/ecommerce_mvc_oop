@@ -69,8 +69,16 @@ class Brands extends BaseModel
 
 
     // Xem bài đăng
-    public function viewBrandClient($fields, $conditions, $order, $limit)
+    public function viewBrandClient($fields, $order, $limit = 0)
     {
+        $conditions = [
+            "state" => 1
+        ];
+        return $this->readData($this->table, $fields, $conditions, $order, $limit);
+    }
+    public function viewBrandAdmin($fields, $order, $limit = 0)
+    {
+        $conditions = [];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
 }
