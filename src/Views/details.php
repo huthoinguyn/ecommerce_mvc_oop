@@ -1,5 +1,4 @@
 <?php
-
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
 ?>
@@ -27,7 +26,7 @@ if ($prodSelectById) {
         <!-- product-detail -->
         <div class="container grid grid-cols-2 gap-6 auto-rows-fr">
             <div>
-                <img src="src/admin/uploads/<?= $ps['image'] ?>" alt="product" class="w-full">
+                <img src="../src/uploads/<?= $ps['image'] ?>" alt="product" class="w-full">
             </div>
 
             <div>

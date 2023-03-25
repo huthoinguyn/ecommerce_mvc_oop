@@ -18,9 +18,7 @@ trait LoginTrait
     public function login($username, $password)
     {
         $user = new Users();
-        // $username = $this->fm->validation($username);
-        // $password = $this->fm->validation($password);
-        $field = ['id', 'username', 'name', 'password'];
+        $field = ['id', 'username', 'name', 'password', 'position'];
         $condition = [
             "username" => $username,
             "password" => $password,
@@ -28,8 +26,24 @@ trait LoginTrait
         $result = $user->viewUser($field, $condition, '', 1);
         return $result;
     }
+    public function register($username, $email, $name, $password, $image = '', $status = 1, $position = 0)
+    {
+        $user = new Users();
+        // $field = ['id', 'username', 'name', 'password'];
+        $data = [
+            "username" => $username,
+            "email" => $email,
+            "name" => $name,
+            "password" => $password,
+            "image" => $image,
+            "status" => $status,
+            "position" => $position
+        ];
+        $table = 'tbl_user';
+        return $user->createData($table, $data);
+    }
 
-    public function logout($request)
+    public function logout()
     {
     }
 

@@ -1,17 +1,10 @@
 <?php include __DIR__ . "/inc/header.php" ?>
 <?php include __DIR__ . "/inc/sidebar.php" ?>
 <section>
-    <form action="category.php" method="POST" class="flex flex-col px-20 py-4">
-
-
+    <form action="/admin/cat" method="POST" class="flex flex-col px-20 py-4">
         <div class="group w-72 md:w-80 lg:w-96">
             <label for="10" class="inline-block w-full text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">New Category</label>
             <div class="block">
-                <?php
-                if (isset($insertCat)) {
-                    echo $insertCat;
-                }
-                ?>
             </div>
             <div class="group relative w-72 md:w-80 lg:w-96">
 
@@ -35,11 +28,6 @@
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Category List</h2>
             </div>
-            <?php
-            if (isset($delCat)) {
-                echo $delCat;
-            }
-            ?>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                     <table class="min-w-full leading-normal">
@@ -101,7 +89,13 @@
 
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <a href="cateedit.php?catId=<?= $ct['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="?catId=<?= $ct['id'] ?>">Delete</a>
+                                            <a href="/admin/updatecat/<?= $ct['id'] ?>">
+                                                Edit
+                                            </a>
+                                            ||
+                                            <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletecat/<?= $ct['id'] ?>">
+                                                Delete
+                                            </a>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                             <button type="button" class="inline-block text-gray-500 hover:text-gray-700">

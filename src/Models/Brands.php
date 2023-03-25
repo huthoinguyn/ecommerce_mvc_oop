@@ -15,14 +15,13 @@ class Brands extends BaseModel
     protected $table = "tbl_brand";
 
     // Thêm bài đăng
-    public function addProducts($title, $content)
+    public function addBrand($name, $state)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'name' => $name,
+            'state' => $state,
             'created_at' => date('Y-m-d H:i:s'),
         ];
-
         return $this->createData($this->table, $data);
     }
 
@@ -49,7 +48,7 @@ class Brands extends BaseModel
      * @throws DeleteException
      * @return void
      */
-    public function deletePost($id)
+    public function delBrand($id)
     {
         try {
             if (!is_integer($id)) {

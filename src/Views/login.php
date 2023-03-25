@@ -9,11 +9,16 @@ include __DIR__ . "/inc/navbar.php";
         <p class="text-gray-600 mb-6 text-sm">
             welcome back customer
         </p>
-        <form action="/post-login" method="POST" autocomplete="off">
+        <?php
+        if (isset($data['message'])) {
+            echo $data['message'];
+        }
+        ?>
+        <form action="/login" method="POST" autocomplete="off">
             <div class="space-y-2">
                 <div>
-                    <label for="username" class="text-gray-600 mb-2 block">Email address</label>
-                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="youremail.@domain.com">
+                    <label for="username" class="text-gray-600 mb-2 block">Username</label>
+                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="username">
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 block">Password</label>

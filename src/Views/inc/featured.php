@@ -11,7 +11,7 @@
                  <div class="group rounded bg-white shadow overflow-hidden">
                      <!-- product image -->
                      <div class="relative h-[240px] overflow-hidden">
-                         <img src="src/admin/uploads/<?= $fp['image'] ?>" class="w-full h-full object-cover">
+                         <img src="src/uploads/<?= $fp['image'] ?>" class="w-full h-full object-cover">
                          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                              <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
                                  <i class="fas fa-search"></i>
@@ -24,7 +24,7 @@
                      <!-- product image end -->
                      <!-- product content -->
                      <div class="pt-4 pb-3 px-4">
-                         <a href="details/prodId=<?= $fp['id'] ?>">
+                         <a href="details/<?= $fp['id'] ?>">
                              <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition line-clamp-2">
                                  <?= $fp['name'] ?>
                              </h4>
@@ -44,7 +44,7 @@
                              <div class="text-xs text-gray-500 ml-3">(150)</div>
                          </div>
                          <!-- product button -->
-                         <a href="details/prodId=<?= $fp['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
+                         <a href="details/<?= $fp['id'] ?>" class="hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
                              View Details
                          </a>
                          <!-- product button end -->

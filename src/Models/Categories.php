@@ -15,24 +15,23 @@ class Categories extends BaseModel
     protected $table = "tbl_category";
 
     // Thêm bài đăng
-    public function addProducts($title, $content)
+    public function addCat($name, $state)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
-            'created_at' => date('Y-m-d H:i:s'),
+            'name' => $name,
+            'state' => $state,
+            'created_at' => date('Y-m-d H:i:s')
         ];
-
         return $this->createData($this->table, $data);
     }
 
 
     // Sửa bài đăng
-    public function updatePost($id, $title, $content)
+    public function updateCat($id, $name, $state)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'name' => $name,
+            'state' => $state,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -49,7 +48,7 @@ class Categories extends BaseModel
      * @throws DeleteException
      * @return void
      */
-    public function deletePost($id)
+    public function deleteCategories($id)
     {
         try {
             if (!is_integer($id)) {
@@ -80,5 +79,16 @@ class Categories extends BaseModel
     {
         $conditions = [];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
+    }
+
+    public function selectCatById($id)
+    {
+        $fields = [
+            'id', 'name', 'state'
+        ];
+        $conditions = [
+            "id" => $id
+        ];
+        return $this->readData($this->table, $fields, $conditions, '', 1);
     }
 }

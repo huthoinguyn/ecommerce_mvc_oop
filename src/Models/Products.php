@@ -15,11 +15,16 @@ class Products extends BaseModel
     protected $table = "tbl_product";
 
     // Thêm bài đăng
-    public function addProducts($title, $content)
+    public function addProducts($name, $catId, $brandId, $description, $type, $price, $image)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'name' => $name,
+            'catId' => $catId,
+            'brandId' => $brandId,
+            'description' => $description,
+            'type' => $type,
+            'price' => $price,
+            'image' => $image,
             'created_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -49,7 +54,7 @@ class Products extends BaseModel
      * @throws DeleteException
      * @return void
      */
-    public function deletePost($id)
+    public function deleteProd($id)
     {
         try {
             if (!is_integer($id)) {
@@ -76,5 +81,10 @@ class Products extends BaseModel
     public function viewAllProducts($fields, $conditions, $limit)
     {
         // return $this->readData($this->table, $fields, $conditions, $limit);
+    }
+
+    public function showAllProd($fields, $conditions, $order, $limit)
+    {
+        return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
 }

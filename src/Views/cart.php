@@ -25,7 +25,7 @@ include __DIR__ . "/inc/navbar.php";
                     <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class=" h-24 overflow-hidden">
-                                <img class="w-32 h-full object-cover" src="src/admin/uploads/<?= $cs['image'] ?>" alt="">
+                                <img class="w-32 h-full object-cover" src="src/uploads/<?= $cs['image'] ?>" alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">

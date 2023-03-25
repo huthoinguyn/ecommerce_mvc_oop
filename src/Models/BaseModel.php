@@ -23,7 +23,7 @@ class BaseModel extends Database implements CRUDInterface
 
     public function __construct()
     {
-        $this->connect();
+        $this->pdo = $this->connect();
     }
 
     protected function connect()
@@ -75,7 +75,6 @@ class BaseModel extends Database implements CRUDInterface
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $this->disconnect();
-
         return $result;
     }
 
@@ -89,7 +88,7 @@ class BaseModel extends Database implements CRUDInterface
 
         // Chuẩn bị và thực thi câu truy vấn với PDO
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(array_values($data));
+        return $stmt->execute(array_values($data));
     }
 
     protected function update($table, $data, $conditions)
@@ -127,12 +126,20 @@ class BaseModel extends Database implements CRUDInterface
         $this->connect();
 
         // Xây dựng câu truy vấn
-        $sql = "DELETE FROM {$table} WHERE {$conditions}";
+        $sql = "DELETE FROM {$table}";
+        foreach ($conditions as $key => $value) {
+            $where[]  = $key . " = ?";
+            $params[] = $value;
+        }
+        if (!empty($where)) {
+            $sql .= " WHERE " . implode(" AND ", $where);
+        }
+
 
         try {
             // Thực thi truy vấn và lấy số bản ghi bị ảnh hưởng
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute($params);
             $affected_rows = $stmt->rowCount();
 
             // Ngắt kết nối database và trả về số bản ghi bị ảnh hưởng
@@ -145,7 +152,7 @@ class BaseModel extends Database implements CRUDInterface
 
     public function createData($table, $data)
     {
-        $this->insert($table, $data);
+        return $this->insert($table, $data);
     }
 
     public function readData($table, $fields, $conditions, $order, $limit)

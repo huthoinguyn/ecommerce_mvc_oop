@@ -1,4 +1,8 @@
 <?php
+
+use App\Controllers\BaseController;
+
+BaseController::checkAdmin();
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
@@ -16,8 +20,8 @@ header("Cache-Control: max-age=2592000");
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
-    <link rel="stylesheet" href="../src/assets/css/style.css">
-    <link rel="stylesheet" href="../src/assets/css/output.css">
+    <link rel="stylesheet" href="../../src/assets/css/style.css">
+    <link rel="stylesheet" href="../../src/assets/css/output.css">
 
     <!-- Tailwind CSS -->
 

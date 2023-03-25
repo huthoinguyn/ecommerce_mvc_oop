@@ -19,8 +19,8 @@ header("Cache-Control: max-age=2592000");
     <title>T-Store</title>
     <link rel="canonical" href="https://tailwinduikit.com/components/E-commerce/Components/shopping%20carts">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="src/assets/css/output.css">
-
+    <link rel="stylesheet" href="../src/assets/css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>

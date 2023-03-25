@@ -15,7 +15,7 @@ class Users extends BaseModel
     protected $table = "tbl_user";
 
     // Thêm bài đăng
-    public function addProducts($title, $content)
+    public function addUser($title, $content)
     {
         $data = [
             'title' => $title,

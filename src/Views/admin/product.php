@@ -21,7 +21,7 @@
                 </svg>
                 <input type="search" placeholder="Search" class=" outline-none w-full py-3 px-14">
             </div>
-            <a href="productadd.php" class="addNewBtn bg-sky-600 hover:bg-sky-700 py-3 px-8 rounded-lg text-sky-100 border-b-4 border-sky-700 hover:border-sky-800 transition duration-300" href="">New Product</a>
+            <a href="/admin/addprod" class="addNewBtn bg-sky-600 hover:bg-sky-700 py-3 px-8 rounded-lg text-sky-100 border-b-4 border-sky-700 hover:border-sky-800 transition duration-300">New Product</a>
         </div>
         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
@@ -61,7 +61,7 @@
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex">
                                             <div class="flex-shrink-0 w-20 h-20 rounded-lg">
-                                                <img class="w-full h-full object-cover" src="../src/admin/uploads/<?= $p['image'] ?>" alt="" />
+                                                <img class="w-full h-full object-cover" src="../src/uploads/<?= $p['image'] ?>" alt="" />
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-gray-900 whitespace-no-wrap">
@@ -87,7 +87,9 @@
 
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                        <a href="productedit.php?prodId=<?= $p['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="?prodId=<?= $p['id'] ?>">Delete</a>
+                                        <a href="productedit.php?prodId=<?= $p['id'] ?>">Edit</a>
+                                        ||
+                                        <a onclick="return confirm('Are you sure to delete?')" href="/admin/deleteprod/<?= $p['id'] ?>">Delete</a>
                                     </td>
                                 </tr>
                         <?php

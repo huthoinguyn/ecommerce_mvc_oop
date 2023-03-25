@@ -9,15 +9,24 @@ include __DIR__ . "/inc/navbar.php";
         <p class="text-gray-600 mb-6 text-sm">
             Register for new cosutumer
         </p>
-        <form action="#" method="post" autocomplete="off">
+        <?php
+        if (isset($data['message'])) {
+            echo $data['message'];
+        }
+        ?>
+        <form action="/register" method="post" autocomplete="off">
             <div class="space-y-2">
                 <div>
+                    <label for="username" class="text-gray-600 mb-2 block">Username</label>
+                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Username">
+                </div>
+                <div>
                     <label for="name" class="text-gray-600 mb-2 block">Full Name</label>
-                    <input type="text" name="name" id="name" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="fulan fulana">
+                    <input type="text" name="name" id="name" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Full Name">
                 </div>
                 <div>
                     <label for="email" class="text-gray-600 mb-2 block">Email address</label>
-                    <input type="email" name="email" id="email" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="youremail.@domain.com">
+                    <input type="email" name="email" id="email" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="user@mail.com">
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 block">Password</label>
@@ -51,7 +60,7 @@ include __DIR__ . "/inc/navbar.php";
         </div>
         <!-- ./login with -->
 
-        <p class="mt-4 text-center text-gray-600">Already have account? <a href="login.html" class="text-primary">Login now</a></p>
+        <p class="mt-4 text-center text-gray-600">Already have account? <a href="/login" class="text-primary">Login now</a></p>
     </div>
 </div>
 

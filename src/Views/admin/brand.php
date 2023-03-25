@@ -2,15 +2,15 @@
 <?php include __DIR__ . "/inc/sidebar.php" ?>
 
 <section>
-    <form action="brand.php" method="POST" class="flex flex-col px-20 py-4">
+    <form action="/admin/brand" method="POST" class="flex flex-col px-20 py-4">
 
 
         <div class="group w-72 md:w-80 lg:w-96">
             <label for="10" class="inline-block w-full text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">New brand</label>
             <div class="block">
                 <?php
-                if (isset($insertCat)) {
-                    echo $insertCat;
+                if (isset($data['message'])) {
+                    echo $data['message'];
                 }
                 ?>
             </div>
@@ -102,7 +102,7 @@
 
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <a href="brandedit.php?brandId=<?= $br['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="?brandId=<?= $br['id'] ?>">Delete</a>
+                                            <a href="/admin/updatebrand/<?= $br['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletebrand/<?= $br['id'] ?>">Delete</a>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                             <button type="button" class="inline-block text-gray-500 hover:text-gray-700">
