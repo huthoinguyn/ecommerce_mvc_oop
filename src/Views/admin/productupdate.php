@@ -1,46 +1,25 @@
-<?php include "layout/header.php" ?>
-<?php include "layout/sidebar.php" ?>
-<?php include '../classes/product.php'; ?>
-<?php include '../classes/category.php'; ?>
-<?php include '../classes/brand.php'; ?>
-
-<?php
-$pd = new product();
-if (!isset($_GET['prodId']) || $_GET['prodId'] == null) {
-    echo "<script>window.location='product.php'</script>";
-} else {
-    $prodId = $_GET['prodId'];
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $updatePd = $pd->update_product($_POST, $_FILES, $prodId);
-}
-?>
-<section class="">
-
-    <div class="w-full mx-auto p-5">
+<?php include __DIR__ . "/inc/header.php" ?>
+<?php include __DIR__ . "/inc/sidebar.php" ?>
+<section>
+    <div class="w-full mx-auto pt-5">
         <?php
-        if (isset($updatePd)) {
-            echo $updatePd;
-        }
+        if ($data['prod']) {
+            foreach ($data['prod'] as $pd) {
         ?>
-        <?php
-        $pdSelectById = $pd->select_product_by_id($prodId);
-        if ($pdSelectById) {
-            while ($p = $pdSelectById->fetch_assoc()) {
-        ?>
-                <form class="w-full" form action="" method="POST" enctype="multipart/form-data">
+                <form class="w-full" action="/admin/updateprod" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?= $pd['id'] ?>">
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                 Product Name
                             </label>
-                            <input name="prodName" value="<?= $p['name'] ?>" class="appearance-none block w-full  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Laptop Thinkpad">
+                            <input name="prodName" value="<?= $pd['name'] ?>" class="appearance-none block w-full  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Laptop Thinkpad">
                         </div>
                         <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                                 Price
                             </label>
-                            <input name="price" value="<?= $p['price'] ?>" class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="$12.34">
+                            <input name="price" value="<?= $pd['price'] ?>" class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="12.34">
                         </div>
                     </div>
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -51,12 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <div class="relative w-full border-none">
                                 <select name="category" class=" text-gray-700 appearance-none border-none outline-none inline-block py-3 pl-3 pr-8 rounded leading-tight w-full">
                                     <?php
-                                    $cat = new category();
-                                    $catList = $cat->show_category();
-                                    if ($catList) {
-                                        while ($ct = $catList->fetch_assoc()) {
+                                    if ($data['cat']) {
+                                        foreach ($data['cat'] as $ct) {
                                     ?>
-                                            <option <?= $p['catId'] == $ct['id'] ? "selected" : "" ?> value="<?= $ct['id'] ?>"><?= $ct['name'] ?></option>
+                                            <option <?= $pd['catId'] == $ct['id'] ? "selected" : "" ?> value="<?= $ct['id'] ?>"><?= $ct['name'] ?></option>
 
                                     <?php
                                         }
@@ -75,12 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <div class="relative w-full border-none">
                                 <select name="brand" class=" text-gray-700 appearance-none border-none outline-none inline-block py-3 pl-3 pr-8 rounded leading-tight w-full">
                                     <?php
-                                    $brand = new brand();
-                                    $brandList = $brand->show_brand();
-                                    if ($brandList) {
-                                        while ($br = $brandList->fetch_assoc()) {
+                                    if ($data['brand']) {
+                                        foreach ($data['brand'] as $br) {
                                     ?>
-                                            <option <?= $p['brandId'] == $br['id'] ? "selected" : "" ?> value="<?= $br['id'] ?>"><?= $br['name'] ?></option>
+                                            <option <?= $pd['brandId'] == $br['id'] ? "selected" : "" ?> value="<?= $br['id'] ?>"><?= $br['name'] ?></option>
 
                                     <?php
                                         }
@@ -101,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 Description
                             </label>
                             <textarea name="description" id="mytextarea" cols="30" rows="10">
-                                <?= $p['description'] ?>
+                                <?= $pd['description'] ?>
                             </textarea>
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
@@ -136,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 Featured
                             </label>
                             <select name="type" class=" text-gray-700 appearance-none border-none outline-none inline-block py-3 pl-3 pr-8 rounded leading-tight w-full">
-                                <option value="1" <?= $p['type'] == 1 ?? "selected" ?>>Featured</option>
-                                <option value="0" <?= $p['type'] == 0 ?? "selected" ?>>Non-featured</option>
+                                <option value="1" <?= $pd['type'] == 1 ? "selected" : "" ?>>Featured</option>
+                                <option value="0" <?= $pd['type'] == 0 ? "selected" : "" ?>>Non-featured</option>
                             </select>
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -181,4 +156,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         };
     }
 </script>
-<?php include "layout/footer.php" ?>
+<?php include __DIR__ . "/inc/footer.php" ?>

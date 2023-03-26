@@ -27,7 +27,7 @@
                     if (isset($_SESSION['user'])) {
                         foreach ($_SESSION['user'] as $user) {
                             echo "  <span class='text-white'> " . $user['name'] . " </span>";
-                            echo "  <a href='/logout' class='text-white'>  Log out  </a>";
+                            echo "  <a onclick=" . "return confirm('Are you sure to delete?')" . " href='/logout' class='text-white'>  Log out  </a>";
                         }
                     } else {
                     ?>

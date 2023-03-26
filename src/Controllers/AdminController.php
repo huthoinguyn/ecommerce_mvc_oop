@@ -75,10 +75,13 @@ class AdminController extends BaseController
     }
     public function updateBrand($id)
     {
-        $cat = new Categories();
-        $catSelect = $cat->selectCatById($id['id']);
-        $data = $catSelect;
-        $this->render('admin/cateupdate', $data);
+        $brand = new Brands();
+        $brandSelect = $brand->selectBrandById($id['id']);
+        $data = [
+            "brand" => $brandSelect
+        ];
+
+        $this->render('admin/brandupdate', $data);
     }
 
     public function postUpdateCat()
@@ -89,5 +92,14 @@ class AdminController extends BaseController
         $cat = new Categories();
         $cat->updateCat($id, $name, $state);
         header("Location: /admin/cat");
+    }
+    public function postUpdateBrand()
+    {
+        $id = (int)$_POST['id'] ?? '';
+        $name = $_POST['brandName'] ?? '';
+        $state = $_POST['state'] ? 1 : 0;
+        $cat = new Categories();
+        $cat->updateCat($id, $name, $state);
+        header("Location: /admin/brand");
     }
 }

@@ -87,7 +87,7 @@
 
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                        <a href="productedit.php?prodId=<?= $p['id'] ?>">Edit</a>
+                                        <a href="/admin/updateprod/<?= $p['id'] ?>">Edit</a>
                                         ||
                                         <a onclick="return confirm('Are you sure to delete?')" href="/admin/deleteprod/<?= $p['id'] ?>">Delete</a>
                                     </td>

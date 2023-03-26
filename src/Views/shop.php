@@ -24,15 +24,21 @@ include __DIR__ . "/inc/navbar.php";
                 <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
                 <div class="space-y-2">
                     <!-- Cat -->
+
+                    <div class="flex items-center">
+                        <a href="/shop" class="text-gray-600 ml-3 cusror-pointer">
+                            All
+                        </a>
+                        <div class="ml-auto text-gray-600 text-sm">(15)</div>
+                    </div>
                     <?php
                     if ($data['cats']) {
                         foreach ($data['cats'] as $cc) {
                     ?>
                             <div class="flex items-center">
-                                <input type="checkbox" name="cat-1" id="cat-1" class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                                <label for="cat-1" class="text-gray-600 ml-3 cusror-pointer">
+                                <a href="/prodselectbycat/<?= $cc['id'] ?>" class="text-gray-600 ml-3 cusror-pointer">
                                     <?= $cc['name'] ?>
-                                </label>
+                                </a>
                                 <div class="ml-auto text-gray-600 text-sm">(15)</div>
                             </div>
                     <?php
@@ -51,8 +57,7 @@ include __DIR__ . "/inc/navbar.php";
                         foreach ($data['brands'] as $br) {
                     ?>
                             <div class="flex items-center">
-                                <input type="checkbox" name="brand-1" id="brand-1" class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                                <label for="brand-1" class="text-gray-600 ml-3 cusror-pointer"><?= $br['name'] ?></label>
+                                <a href="/prodselectbybrand/<?= $br['id'] ?>" class="text-gray-600 ml-3 cusror-pointer"><?= $br['name'] ?></a>
                                 <div class="ml-auto text-gray-600 text-sm">(15)</div>
                             </div>
                     <?php
@@ -127,7 +132,7 @@ include __DIR__ . "/inc/navbar.php";
                     <div class="group rounded bg-white shadow overflow-hidden flex-shrink-0">
                         <!-- product image -->
                         <div class="relative h-[240px] overflow-hidden z-0">
-                            <img zin src="src/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
+                            <img src="../src/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                                 <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
                                     <i class="fas fa-search"></i>

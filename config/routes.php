@@ -40,10 +40,14 @@ try {
     Route::get('/about', AboutController::class . '@viewAbout');
 
     Route::get('/shop', ProductController::class . '@index');
+    Route::get('/prodselectbycat/{id}', ProductController::class . '@prodSelectByCat');
+    Route::get('/prodselectbybrand/{id}', ProductController::class . '@prodSelectByBrand');
     Route::get('/admin/prod', ProductController::class . '@getProd');
     Route::get('/admin/addprod', ProductController::class . '@addProd');
     Route::post('/admin/addprod', ProductController::class . '@postProd');
     Route::get('/admin/deleteprod/{id}', ProductController::class . '@deleteProd');
+    Route::get('/admin/updateprod/{id}', ProductController::class . '@updateProd');
+    Route::post('/admin/updateprod', ProductController::class . '@postUpdateProd');
 
     Route::get('/cart', CartController::class . '@index');
 

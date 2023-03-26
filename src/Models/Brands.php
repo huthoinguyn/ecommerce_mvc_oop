@@ -80,4 +80,15 @@ class Brands extends BaseModel
         $conditions = [];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
+
+    public function selectBrandById($id)
+    {
+        $fields = [
+            'id', 'name', 'state'
+        ];
+        $conditions = [
+            "id" => $id
+        ];
+        return $this->readData($this->table, $fields, $conditions, '', 1);
+    }
 }

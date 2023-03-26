@@ -1,8 +1,12 @@
 <?php include __DIR__ . "/inc/header.php" ?>
 <?php include __DIR__ . "/inc/sidebar.php" ?>
 <section class="">
-
     <div class="w-full mx-auto p-5">
+        <?php
+        if (isset($data['message'])) {
+            echo $data['message'];
+        }
+        ?>
         <form class="w-full" action="/admin/addprod" method="POST" enctype="multipart/form-data">
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">

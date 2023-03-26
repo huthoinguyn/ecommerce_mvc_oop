@@ -76,8 +76,6 @@ class AuthController extends BaseController
 
     public function getLogout()
     {
-        $_SESSION['checkLogin'] = false;
-        unset($_SESSION['user']);
-        header('Location: /');
+        BaseController::destroy();
     }
 }

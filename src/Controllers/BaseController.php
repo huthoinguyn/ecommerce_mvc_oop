@@ -79,7 +79,7 @@ class BaseController
         // self::init();
         if (self::get("checkLogin") == false) {
             self::destroy();
-            header("Location: /");
+            header("Location: /notfound");
         }
     }
     public static function checkAdmin()

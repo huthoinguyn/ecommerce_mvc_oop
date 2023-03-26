@@ -162,7 +162,7 @@ class BaseModel extends Database implements CRUDInterface
 
     public function updateData($table, $data, $conditions)
     {
-        $this->update($table, $data, $conditions);
+       return $this->update($table, $data, $conditions);
     }
 
     public function deleteData($table, $conditions)

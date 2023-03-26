@@ -33,11 +33,34 @@ class Products extends BaseModel
 
 
     // Sửa bài đăng
-    public function updatePost($id, $title, $content)
+    public function updateProd($id, $name, $catId, $brandId, $description, $type, $price, $image)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'name' => $name,
+            'catId' => $catId,
+            'brandId' => $brandId,
+            'description' => $description,
+            'type' => $type,
+            'price' => $price,
+            'image' => $image,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $conditions = [
+            'id' => $id,
+        ];
+
+        return $this->updateData($this->table, $data, $conditions);
+    }
+    public function updateProdnonImage($id, $name, $catId, $brandId, $description, $type, $price)
+    {
+        $data = [
+            'name' => $name,
+            'catId' => $catId,
+            'brandId' => $brandId,
+            'description' => $description,
+            'type' => $type,
+            'price' => $price,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -86,5 +109,16 @@ class Products extends BaseModel
     public function showAllProd($fields, $conditions, $order, $limit)
     {
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
+    }
+
+    public function prodSelectById($id)
+    {
+        $fields = [
+            '*'
+        ];
+        $conditions = [
+            "id" => $id
+        ];
+        return $this->readData($this->table, $fields, $conditions, '', 1);
     }
 }
