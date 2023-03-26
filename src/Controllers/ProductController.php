@@ -70,7 +70,7 @@ class ProductController extends BaseController
     public function showDetails($id)
     {
         $conditions = ["id" => $id['id']];
-        $fields = ['name', 'price', 'image', 'description'];
+        $fields = ['*'];
         $prodDetails = $this->pd->viewProducts($fields, $conditions, '', 1);
         $data = [
             "details" => $prodDetails

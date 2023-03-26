@@ -99,7 +99,8 @@ if ($prodSelectById) {
 
                     </div>
                 </div>
-                <form action="" method="POST">
+                <form action="/addtocart" method="POST">
+                    <input type="hidden" name="id" value="<?= $ps['id'] ?>">
                     <div class="mt-4">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
@@ -107,9 +108,9 @@ if ($prodSelectById) {
                         </div>
                     </div>
                     <?php
-                    if (isset($addCart)) {
-                        echo $addCart;
-                    }
+                    // if (isset($data['message'])) {
+                    //     echo $data['message'];
+                    // }
                     ?>
                     <div class="mt-4 flex gap-3 border-b border-gray-200 pb-5">
                         <button type="submit" name="submit" class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">

@@ -10,9 +10,9 @@ include __DIR__ . "/inc/navbar.php";
             Register for new cosutumer
         </p>
         <?php
-        if (isset($data['message'])) {
-            echo $data['message'];
-        }
+        // if (isset($data['message'])) {
+        //     echo $data['message'];
+        // }
         ?>
         <form action="/register" method="post" autocomplete="off">
             <div class="space-y-2">

@@ -10,9 +10,9 @@ include __DIR__ . "/inc/navbar.php";
             welcome back customer
         </p>
         <?php
-        if (isset($data['message'])) {
-            echo $data['message'];
-        }
+        // if (isset($data['message'])) {
+        //     echo $data['message'];
+        // }
         ?>
         <form action="/login" method="POST" autocomplete="off">
             <div class="space-y-2">

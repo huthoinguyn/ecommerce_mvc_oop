@@ -18,8 +18,8 @@ include __DIR__ . "/inc/navbar.php";
             </div>
             <?php
             $subTotal = 0;
-            if ($data['cart']) {
-                while ($cs = $data['cart']->fetch_assoc()) {
+            if (isset($data['cart'])) {
+                foreach ($data['cart'] as $cs) {
                     $subTotal += $cs['price'] * $cs['quantity'];
             ?>
                     <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">

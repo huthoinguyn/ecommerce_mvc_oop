@@ -50,6 +50,7 @@ try {
     Route::post('/admin/updateprod', ProductController::class . '@postUpdateProd');
 
     Route::get('/cart', CartController::class . '@index');
+    Route::post('/addtocart', CartController::class . '@addToCart');
 
     Route::get('/admin', AdminController::class . '@index');
     Route::get('/admin/cat', AdminController::class . '@getCat');

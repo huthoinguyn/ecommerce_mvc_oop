@@ -8,7 +8,11 @@ header("Cache-Control: max-age=2592000");
 //     include_once "classes/" . $class . ".php";
 // })
 ?>
-
+<?php
+if (isset($data['message'])) {
+    echo $data['message'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
