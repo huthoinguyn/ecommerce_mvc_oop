@@ -167,6 +167,6 @@ class BaseModel extends Database implements CRUDInterface
 
     public function deleteData($table, $conditions)
     {
-        $this->delete($table, $conditions);
+        return $this->delete($table, $conditions);
     }
 }

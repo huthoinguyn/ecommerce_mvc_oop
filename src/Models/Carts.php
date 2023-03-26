@@ -32,16 +32,15 @@ class Carts extends BaseModel
 
 
     // Sửa bài đăng
-    public function updatePost($id, $title, $content)
+    public function updateCart($quantity, $cartId)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'quantity' => $quantity,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         $conditions = [
-            'id' => $id,
+            'id' => $cartId,
         ];
 
         return $this->updateData($this->table, $data, $conditions);
@@ -53,7 +52,7 @@ class Carts extends BaseModel
      * @throws DeleteException
      * @return void
      */
-    public function delBrand($id)
+    public function delCart($id)
     {
         try {
             if (!is_integer($id)) {
@@ -84,6 +83,18 @@ class Carts extends BaseModel
         ];
         $conditions = [
             "id" => $id
+        ];
+        return $this->readData($this->table, $fields, $conditions, '', 1);
+    }
+
+    public function checkCart($prodId, $userId)
+    {
+        $fields = [
+            '*'
+        ];
+        $conditions = [
+            "prodId" => $prodId,
+            "userId" => $userId
         ];
         return $this->readData($this->table, $fields, $conditions, '', 1);
     }
