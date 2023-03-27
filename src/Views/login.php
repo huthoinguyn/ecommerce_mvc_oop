@@ -18,11 +18,11 @@ include __DIR__ . "/inc/navbar.php";
             <div class="space-y-2">
                 <div>
                     <label for="username" class="text-gray-600 mb-2 block">Username</label>
-                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="username">
+                    <input type="text" name="username" id="username" value="<?= isset($data['username']) ? $data['username'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="username">
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 block">Password</label>
-                    <input type="password" name="password" id="password" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <input type="password" name="password" id="password" value="<?= isset($data['password']) ? $data['password'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
                 </div>
             </div>
             <div class="flex items-center justify-between mt-6">

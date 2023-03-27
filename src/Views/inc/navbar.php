@@ -22,12 +22,15 @@
                     <a href="/" class="text-gray-200 hover:text-white transition">About us</a>
                     <a href="/" class="text-gray-200 hover:text-white transition">Contact us</a>
                 </div>
-                <div class="flex">
+                <div class="flex gap-4">
                     <?php
                     if (isset($_SESSION['user'])) {
                         foreach ($_SESSION['user'] as $user) {
+                            if ($user['position'] == 1) {
+                                echo "  <a  href='/admin' class='text-white'>  Go to Admin </a>";
+                            }
                             echo "  <span class='text-white'> " . $user['name'] . " </span>";
-                            echo "  <a onclick=" . "return confirm('Are you sure to delete?')" . " href='/logout' class='text-white'>  Log out  </a>";
+                            echo "  <a onclick=" . "return confirm('Are you sure to log out?')" . " href='/logout' class='text-white'>  Log out  </a>";
                         }
                     } else {
                     ?>

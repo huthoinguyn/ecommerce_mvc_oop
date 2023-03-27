@@ -12,9 +12,6 @@ class CartController extends BaseController
     private $cart;
     private $pd;
     private $_checkLogin;
-
-    private $cartShowAll;
-
     private $userId;
 
     public function __construct()
@@ -23,7 +20,6 @@ class CartController extends BaseController
         $this->pd = new Products();
         $this->_checkLogin = BaseController::checkLogin();
         $this->userId = BaseController::get('userId');
-        $this->cartShowAll = $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0);
     }
     public function index()
     {
@@ -54,8 +50,10 @@ class CartController extends BaseController
             if (empty($checkCart)) {
                 $addCart = $this->cart->addCart($prodId, $this->userId, $sId, $p['name'], $p['price'], $p['image'], $qty);
                 if (!empty($addCart)) {
+                    $count = $this->cart->cartCount($this->userId);
+                    BaseController::set('count', $count);
                     $data = [
-                        "cart" => $this->cartShowAll,
+                        "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
                         "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Add to cart successfully.</div>"
                     ];
                     return $this->render('cart', $data);
@@ -84,7 +82,7 @@ class CartController extends BaseController
             $cartUpdate = $this->cart->updateCart($quantity, $cartId);
             if (!empty($cartUpdate)) {
                 $data = [
-                    "cart" => $this->cartShowAll,
+                    "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
                     "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Cart update successfully.</div>"
                 ];
                 return $this->render('cart', $data);
@@ -95,14 +93,16 @@ class CartController extends BaseController
     {
         $cartDel = $this->cart->delCart((int)(isset($id['id']) ? $id['id'] : $id));
         if (!empty($cartDel)) {
+            $count = $this->cart->cartCount($this->userId);
+            BaseController::set('count', $count);
             $data = [
-                "cart" => $this->cartShowAll,
+                "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
                 "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Delete successfully.</div>"
             ];
             return $this->render('cart', $data);
         } else {
             $data = [
-                "cart" => $this->cartShowAll,
+                "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
                 "message" => "<div class='text-red-500 text-center p-2 bg-red-200'>Something went wrong!</div>"
             ];
             return $this->render('cart', $data);

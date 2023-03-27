@@ -98,4 +98,16 @@ class Carts extends BaseModel
         ];
         return $this->readData($this->table, $fields, $conditions, '', 1);
     }
+
+    public function cartCount($userId)
+    {
+        $fields = [
+            'COUNT(*) AS cartCount'
+        ];
+
+        $conditions = [
+            "userId" => $userId
+        ];
+        return $this->readData($this->table, $fields, $conditions, '', 1);
+    }
 }

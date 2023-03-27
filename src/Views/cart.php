@@ -8,7 +8,6 @@ include __DIR__ . "/inc/navbar.php";
         <div class="w-3/4 bg-white px-10 py-10">
             <div class="flex justify-between border-b pb-8">
                 <h1 class="font-semibold text-2xl">Shopping Cart</h1>
-                <h2 class="font-semibold text-2xl">0 Items</h2>
             </div>
             <div class="flex mt-10 mb-5">
                 <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
@@ -18,7 +17,7 @@ include __DIR__ . "/inc/navbar.php";
             </div>
             <?php
             $subTotal = 0;
-            if (isset($data['cart'])) {
+            if (!empty($data['cart'])) {
                 foreach ($data['cart'] as $cs) {
                     $subTotal += $cs['price'] * $cs['quantity'];
             ?>
