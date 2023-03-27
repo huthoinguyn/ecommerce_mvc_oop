@@ -50,6 +50,9 @@ try {
     Route::post('/admin/updateprod', ProductController::class . '@postUpdateProd');
 
     Route::get('/cart', CartController::class . '@index');
+    Route::post('/addtocart', CartController::class . '@addToCart');
+    Route::post('/updatecart', CartController::class . '@updateCart');
+    Route::get('/deletecart/{id}', CartController::class . '@delCart');
 
     Route::get('/admin', AdminController::class . '@index');
     Route::get('/admin/cat', AdminController::class . '@getCat');

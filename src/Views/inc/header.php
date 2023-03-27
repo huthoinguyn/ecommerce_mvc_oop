@@ -1,14 +1,18 @@
 <?php
+
+use App\Controllers\BaseController;
+
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 header("Cache-Control: max-age=2592000");
 
-// spl_autoload_register(function ($class) {
-//     include_once "classes/" . $class . ".php";
-// })
 ?>
-
+<?php
+if (isset($data['message'])) {
+    echo $data['message'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,17 +65,17 @@ header("Cache-Control: max-age=2592000");
                         <div class="text-xs leading-3">Wish List</div>
                     </a>
                     <a href="/cart" class="lg:block text-center text-gray-700 hover:text-primary transition hidden relative">
-                        <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-                            <?php
-                            // $cartCount = $cart->cart_count();
-                            // if (isset($cartCount)) {
-                            //     while ($cc = $cartCount->fetch_assoc()) {
-                            //         echo $cc['cartCount'];
-                            //     }
-                            // }
-                            ?>
-                            3
-                        </span>
+                        <?php
+                        if (BaseController::get('count')) {
+                            foreach (BaseController::get('count') as $count) {
+                        ?>
+                                <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
+                                    <?php echo $count['cartCount']; ?>
+                                </span>
+                        <?php
+                            }
+                        }
+                        ?>
                         <div class="text-2xl">
                             <i class="fas fa-shopping-bag"></i>
                         </div>

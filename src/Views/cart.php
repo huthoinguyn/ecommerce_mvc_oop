@@ -8,7 +8,6 @@ include __DIR__ . "/inc/navbar.php";
         <div class="w-3/4 bg-white px-10 py-10">
             <div class="flex justify-between border-b pb-8">
                 <h1 class="font-semibold text-2xl">Shopping Cart</h1>
-                <h2 class="font-semibold text-2xl">0 Items</h2>
             </div>
             <div class="flex mt-10 mb-5">
                 <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
@@ -18,27 +17,27 @@ include __DIR__ . "/inc/navbar.php";
             </div>
             <?php
             $subTotal = 0;
-            if ($data['cart']) {
-                while ($cs = $data['cart']->fetch_assoc()) {
+            if (!empty($data['cart'])) {
+                foreach ($data['cart'] as $cs) {
                     $subTotal += $cs['price'] * $cs['quantity'];
             ?>
                     <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                         <div class="flex w-2/5"> <!-- product -->
                             <div class=" h-24 overflow-hidden">
-                                <img class="w-32 h-full object-cover" src="src/uploads/<?= $cs['image'] ?>" alt="">
+                                <img class="w-32 h-full object-cover" src="../src/uploads/<?= $cs['image'] ?>" alt="">
                             </div>
                             <div class="flex flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">
-                                    <a href="/details?prodId=<?= $cs['prodId'] ?>">
+                                    <a href="/details/<?= $cs['prodId'] ?>">
                                         <?= $cs['prodName'] ?>
                                     </a>
                                 </span>
                                 <span class="text-red-500 text-xs"></span>
-                                <a onclick="return confirm('Are you sure to delete?')" href="/cart?cartId=<?= $cs['id'] ?>" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                                <a onclick="return confirm('Are you sure to delete?')" href="/deletecart/<?= $cs['id'] ?>" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
                             </div>
                         </div>
                         <div class="flex justify-center w-1/5">
-                            <form action="/cart" method="POST">
+                            <form action="/updatecart" method="POST">
                                 <input type="hidden" name="cartId" value="<?= $cs['id'] ?>">
                                 <input type="hidden" name="updateQty">
                                 <input onchange="this.form.submit()" class="mx-2 pl-2 pr-1 py-2 border text-center w-16" name="quantity" type="number" min="0" value="<?= $cs['quantity'] ?>">

@@ -3,38 +3,82 @@ include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
 ?>
 
+<style>
+    .rotate-45 {
+        --transform-rotate: 45deg;
+        transform: rotate(45deg);
+    }
+
+    .group:hover .group-hover\:flex {
+        display: flex;
+    }
+</style>
+
 <div class="contain py-16">
     <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
         <h2 class="text-2xl uppercase font-medium mb-1">Create an account</h2>
         <p class="text-gray-600 mb-6 text-sm">
             Register for new cosutumer
         </p>
-        <?php
-        if (isset($data['message'])) {
-            echo $data['message'];
-        }
-        ?>
+
         <form action="/register" method="post" autocomplete="off">
             <div class="space-y-2">
-                <div>
-                    <label for="username" class="text-gray-600 mb-2 block">Username</label>
-                    <input type="text" name="username" id="username" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Username">
+                <div class="">
+                    <label for="username" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Username
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="absolute left-[25%] items-center hidden group-hover:flex">
+                            <div class="w-3 h-3 -mr-2 rotate-45 bg-black"></div>
+                            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Username is 8-20 characters long</span>
+                        </div>
+                    </label>
+                    <input type="text" name="username" id="username" value="<?= isset($data['values']) ? $data['values']['username'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Username">
+
+
+
+
+
                 </div>
                 <div>
-                    <label for="name" class="text-gray-600 mb-2 block">Full Name</label>
-                    <input type="text" name="name" id="name" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Full Name">
+                    <label for="name" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Full Name
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="absolute left-[25%] items-center hidden group-hover:flex">
+                            <div class="w-3 h-3 -mr-2 rotate-45 bg-black"></div>
+                            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Note: Nguyen Van A</span>
+                        </div>
+                    </label>
+                    <input type="text" name="name" id="name" value="<?= isset($data['values']) ? $data['values']['name'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Full Name">
                 </div>
                 <div>
-                    <label for="email" class="text-gray-600 mb-2 block">Email address</label>
-                    <input type="email" name="email" id="email" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="user@mail.com">
+                    <label for="email" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Email address
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="absolute left-[30%] items-center hidden group-hover:flex">
+                            <div class="w-3 h-3 -mr-2 rotate-45 bg-black"></div>
+                            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Note: user@gmail.com</span>
+                        </div>
+                    </label>
+                    <input type="email" name="email" id="email" value="<?= isset($data['values']) ? $data['values']['email'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="user@mail.com">
                 </div>
                 <div>
-                    <label for="password" class="text-gray-600 mb-2 block">Password</label>
-                    <input type="password" name="password" id="password" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <label for="password" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Password
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="absolute left-[25%] items-center hidden group-hover:flex">
+                            <div class="w-3 h-3 -mr-2 rotate-45 bg-black"></div>
+                            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number:</span>
+                        </div>
+                    </label>
+                    <input type="password" name="password" id="password" value="<?= isset($data['values']) ? $data['values']['password'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
                 </div>
                 <div>
                     <label for="confirm" class="text-gray-600 mb-2 block">Confirm password</label>
-                    <input type="password" name="confirm" id="confirm" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <input type="password" name="confirm" id="confirm" value="<?= isset($data['values']) ? $data['values']['confirm'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
                 </div>
             </div>
             <div class="mt-6">

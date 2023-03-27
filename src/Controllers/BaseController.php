@@ -87,21 +87,22 @@ class BaseController
         // self::init();
         if (self::get("admin") == false) {
             self::destroy();
-            header("Location: /notfound");
+            return false;
         }
     }
 
     public static function checkLogin()
     {
         // self::init();
-        if (self::get("userLogin") == true) {
-            header("Location: /");
+        if (self::get("checkLogin") == false) {
+            return false;
         }
     }
 
     public static function destroy()
     {
         session_destroy();
+        self::set('checkLogin', false);
         header("Location: /login");
     }
 }

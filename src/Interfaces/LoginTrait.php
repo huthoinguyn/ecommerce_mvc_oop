@@ -18,7 +18,7 @@ trait LoginTrait
     public function login($username, $password)
     {
         $user = new Users();
-        $field = ['id', 'username', 'name', 'password', 'position'];
+        $field = ['*'];
         $condition = [
             "username" => $username,
             "password" => $password,
