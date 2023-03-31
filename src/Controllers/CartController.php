@@ -40,7 +40,7 @@ class CartController extends BaseController
     public function addToCart()
     {
         $prodId = $_POST['id'];
-        $prodDetails = $this->pd->viewProducts(['*'], ['id' => $prodId], '', 1);
+        $prodDetails = $this->pd->prodSelectById($prodId);
         if (BaseController::get('checkLogin')) {
             $qty = $this->validation($_POST['quantity']);
             $sId = session_id();

@@ -47,14 +47,20 @@ if ($prodSelectById) {
                         <span class="text-green-600">In Stock</span>
                     </p>
                     <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Brand: </span>
-                        <span class="text-gray-600"><?php //$ps['brandName'] 
-                                                    ?></span>
+                        <span class="text-gray-800 font-semibold">
+                            Brand:
+                        </span>
+                        <span class="text-gray-600 font-semibold bg-gray-100 px-2 py-1 rounded">
+                            <?= $ps['brandName'] ?>
+                        </span>
                     </p>
                     <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Category: </span>
-                        <span class="text-gray-600"><?php //$ps['catName'] 
-                                                    ?></span>
+                        <span class="text-gray-800 font-semibold">
+                            Category:
+                        </span>
+                        <span class="text-gray-600 font-semibold bg-gray-100 px-2 py-1 rounded">
+                            <?= $ps['catName'] ?>
+                        </span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">SKU: </span>

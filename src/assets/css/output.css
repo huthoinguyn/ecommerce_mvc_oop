@@ -664,16 +664,20 @@ h1,
   top: -0.25rem;
 }
 
-.bottom-0{
-  bottom: 0px;
-}
-
 .left-0{
   left: 0px;
 }
 
 .left-4{
   left: 1rem;
+}
+
+.left-\[25\%\]{
+  left: 25%;
+}
+
+.left-\[30\%\]{
+  left: 30%;
 }
 
 .right-0{
@@ -690,34 +694,6 @@ h1,
 
 .top-full{
   top: 100%;
-}
-
-.right-10{
-  right: 2.5rem;
-}
-
-.right-\[100\%\]{
-  right: 100%;
-}
-
-.left-\[100\%\]{
-  left: 100%;
-}
-
-.left-\[\]{
-  left: ;
-}
-
-.left-\[20\%\]{
-  left: 20%;
-}
-
-.left-\[25\%\]{
-  left: 25%;
-}
-
-.left-\[30\%\]{
-  left: 30%;
 }
 
 .z-0{
@@ -791,8 +767,8 @@ h1,
   margin-bottom: 2.5rem;
 }
 
-.-mt-2{
-  margin-top: -0.5rem;
+.-mr-2{
+  margin-right: -0.5rem;
 }
 
 .mb-1{
@@ -869,14 +845,6 @@ h1,
 
 .mt-8{
   margin-top: 2rem;
-}
-
-.-mr-2{
-  margin-right: -0.5rem;
-}
-
-.ml-6{
-  margin-left: 1.5rem;
 }
 
 .block{
@@ -1449,6 +1417,11 @@ h1,
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.bg-gray-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .bg-gray-50{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
@@ -1640,6 +1613,11 @@ h1,
 .py-9{
   padding-top: 2.25rem;
   padding-bottom: 2.25rem;
+}
+
+.px-1{
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .pb-12{

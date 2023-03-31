@@ -14,6 +14,12 @@ class Brands extends BaseModel
     // ghi đè method và cả (thuộc tính) của class cha
     protected $table = "tbl_brand";
 
+    CONST TABLE = 'tbl_brand';
+
+    public function getTable (){
+        return self::$table;
+    }
+
     // Thêm bài đăng
     public function addBrand($name, $state)
     {
