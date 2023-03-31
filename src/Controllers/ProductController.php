@@ -27,6 +27,7 @@ class ProductController extends BaseController
         $cats = $this->cat->viewCategoryClient(['id', 'name', 'state'], '', 0);
         $brands = $this->brand->viewBrandClient(['id', 'name', 'state'], '', 0);
         $prods = $this->pd->viewProducts(['id', 'name', 'price', 'image', 'description', 'catId', 'brandId', 'type'], [], 'id ASC', 0);
+
         $data = [
             "prods" => $prods,
             "cats" => $cats,
@@ -37,7 +38,22 @@ class ProductController extends BaseController
 
     public function getProd()
     {
-        $prodList = $this->pd->viewProducts(['id', 'name', 'catId', 'brandId', 'price', 'image', 'description', 'type'], [], '', 0);
+        $fields = [
+            'tbl_product.id as id',
+            'tbl_product.name as name',
+            'tbl_product.price as price',
+            'tbl_product.image as image',
+            'tbl_product.description as description',
+            'tbl_product.type as type',
+            'tbl_category.name as catName',
+            'tbl_brand.name as brandName',
+        ];
+
+        $inner = [
+            'catId' => Categories::TABLE,
+            'brandId' => Brands::TABLE,
+        ];
+        $prodList = $this->pd->viewAllProducts($fields, $inner, [], '', 0);
         $data = $prodList;
         $this->render('admin/product', $data);
     }
@@ -69,9 +85,7 @@ class ProductController extends BaseController
 
     public function showDetails($id)
     {
-        $conditions = ["id" => $id['id']];
-        $fields = ['*'];
-        $prodDetails = $this->pd->viewProducts($fields, $conditions, '', 1);
+        $prodDetails = $this->pd->prodSelectById((int)$id['id']);
         $data = [
             "details" => $prodDetails
         ];

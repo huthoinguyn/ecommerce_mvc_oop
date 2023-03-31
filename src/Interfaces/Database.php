@@ -12,7 +12,7 @@ abstract class Database
 
     abstract protected function disconnect();
 
-    abstract protected function select($table, $fields, $conditions, $order, $limit);
+    abstract protected function select($table, $fields, $inner, $conditions, $order, $limit);
 
     abstract protected function insert($table, $data);
 

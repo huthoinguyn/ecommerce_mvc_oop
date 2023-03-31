@@ -101,9 +101,9 @@ class Products extends BaseModel
     {
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
-    public function viewAllProducts($fields, $conditions, $limit)
+    public function viewAllProducts($fields, $inners, $conditions, $order,  $limit)
     {
-        // return $this->readData($this->table, $fields, $conditions, $limit);
+        return $this->readDatas($this->table, $fields, $inners, $conditions, $order,  $limit);
     }
 
     public function showAllProd($fields, $conditions, $order, $limit)
@@ -111,14 +111,34 @@ class Products extends BaseModel
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
 
+    /**
+     * Summary of prodSelectById
+     * @param mixed $id-0
+     * @return array
+     */
     public function prodSelectById($id)
     {
         $fields = [
-            '*'
+            'tbl_product.id as id',
+            'tbl_product.name as name',
+            'tbl_product.price as price',
+            'tbl_product.image as image',
+            'tbl_product.description as description',
+            'tbl_product.type as type',
+            'tbl_category.name as catName',
+            'tbl_category.id as catId',
+            'tbl_brand.name as brandName',
+            'tbl_brand.id as brandId',
         ];
+
+        $inner = [
+            'catId' => Categories::TABLE,
+            'brandId' => Brands::TABLE,
+        ];
+
         $conditions = [
-            "id" => $id
+            $this->table . ".id" => $id
         ];
-        return $this->readData($this->table, $fields, $conditions, '', 1);
+        return $this->readDatas($this->table, $fields, $inner, $conditions, '', 1);
     }
 }

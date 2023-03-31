@@ -14,6 +14,13 @@ class Categories extends BaseModel
     // ghi đè method và cả (thuộc tính) của class cha
     protected $table = "tbl_category";
 
+    // public static $TABLE = $this->table;
+    const TABLE = 'tbl_category';
+
+    public static function getTable (){
+        return self::$table;
+    }
+
     // Thêm bài đăng
     public function addCat($name, $state)
     {

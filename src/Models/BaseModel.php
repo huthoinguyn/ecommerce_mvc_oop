@@ -43,11 +43,17 @@ class BaseModel extends Database implements CRUDInterface
         $this->_connection = null;
     }
 
-    protected function select($table, $fields, $conditions, $order = '', $limit = 0)
+    protected function select($table, $fields, $inner = [], $conditions, $order = '', $limit = 0)
     {
         $pdo = $this->connect();
 
         $sql    = "SELECT " . implode(", ", $fields) . " FROM " . $table;
+
+
+        foreach ($inner as $field => $tbl) {
+            $sql .= " INNER JOIN " . $tbl . " ON " . $table . "." . $field . " = " . $tbl . ".id";
+        }
+
         $where  = [];
         $params = [];
         foreach ($conditions as $key => $value) {
@@ -59,9 +65,9 @@ class BaseModel extends Database implements CRUDInterface
         }
 
         if (!empty($order)) {
-            $sql .= " ORDER BY " . $order;
+            $sql .= " ORDER BY " . $table . '.' . $order;
         } else {
-            $sql .= " ORDER BY id DESC";
+            $sql .= " ORDER BY " . $table . ".id DESC";
         }
 
         if ($limit != 0 && $limit >= 1) {
@@ -157,12 +163,16 @@ class BaseModel extends Database implements CRUDInterface
 
     public function readData($table, $fields, $conditions, $order, $limit)
     {
-        return $this->select($table, $fields, $conditions, $order, $limit);
+        return $this->select($table, $fields, [], $conditions, $order, $limit);
+    }
+    public function readDatas($table, $fields, $inner, $conditions, $order, $limit)
+    {
+        return $this->select($table, $fields, $inner, $conditions, $order, $limit);
     }
 
     public function updateData($table, $data, $conditions)
     {
-       return $this->update($table, $data, $conditions);
+        return $this->update($table, $data, $conditions);
     }
 
     public function deleteData($table, $conditions)

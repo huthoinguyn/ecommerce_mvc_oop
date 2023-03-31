@@ -10,6 +10,8 @@ interface CRUDInterface
 
     public function readData($table, $field, $conditions, $order, $limit);
 
+    public function readDatas($table, $fields, $inner, $conditions, $order, $limit);
+
     public function updateData($table, $data, $conditions);
 
     public function deleteData($table, $conditions);
