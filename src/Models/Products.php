@@ -14,6 +14,8 @@ class Products extends BaseModel
     // ghi đè method và cả (thuộc tính) của class cha
     protected $table = "tbl_product";
 
+    const TABLE = 'tbl_product';
+
     // Thêm bài đăng
     public function addProducts($name, $catId, $brandId, $description, $type, $price, $image)
     {
@@ -119,7 +121,7 @@ class Products extends BaseModel
     public function prodSelectById($id)
     {
         $fields = [
-            'tbl_product.id as id',
+            'tbl_product.id as prodId',
             'tbl_product.name as name',
             'tbl_product.price as price',
             'tbl_product.image as image',
@@ -140,5 +142,10 @@ class Products extends BaseModel
             $this->table . ".id" => $id
         ];
         return $this->readDatas($this->table, $fields, $inner, $conditions, '', 1);
+    }
+
+    public function last_insert_id()
+    {
+        return $this->readData($this->table, ['id'], [], '', 1);
     }
 }

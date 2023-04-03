@@ -132,7 +132,12 @@ include __DIR__ . "/inc/navbar.php";
                     <div class="group rounded bg-white shadow overflow-hidden flex-shrink-0">
                         <!-- product image -->
                         <div class="relative h-[240px] overflow-hidden z-0">
-                            <img src="../src/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
+                            <?php
+                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $p['image'])) : ?>
+                                <img src="<?= $p['image'] ?>" class="w-full h-full object-cover">
+                            <?php else : ?>
+                                <img src="src/uploads/<?= $p['image'] ?>" class="w-full h-full object-cover">
+                            <?php endif; ?>
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                                 <a href="details.php" class="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center">
                                     <i class="fas fa-search"></i>
@@ -145,7 +150,7 @@ include __DIR__ . "/inc/navbar.php";
                         <!-- product image end -->
                         <!-- product content -->
                         <div class="pt-4 pb-3 px-4">
-                            <a href="/details/<?= $p['id'] ?>">
+                            <a href="details?id=<?= $p['id'] ?>">
                                 <h4 class="uppercase font-medium text-lg mb-2 text-gray-800 hover:text-primary transition line-clamp-2">
                                     <?= $p['name'] ?>
                                 </h4>
@@ -165,7 +170,7 @@ include __DIR__ . "/inc/navbar.php";
                                 <div class="text-xs text-gray-500 ml-3">(150)</div>
                             </div>
                             <!-- product button -->
-                            <a href="/details/<?= $p['id'] ?>" class="view-details">
+                            <a href="details?id=<?= $p['id'] ?>" class="view-details">
                                 Details
                             </a>
                             <!-- product button end -->

@@ -19,16 +19,18 @@ header("Cache-Control: max-age=2592000");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
+
     <link rel="stylesheet" href="../../src/assets/css/style.css">
     <link rel="stylesheet" href="../../src/assets/css/output.css">
 
     <!-- Tailwind CSS -->
 
     <title>admin</title>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/dygeekkamgrmfj4pe6kdu3fdgn5u7qu4ig56ne87re336jdu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         tinymce.init({

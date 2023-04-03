@@ -61,7 +61,14 @@
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex">
                                             <div class="flex-shrink-0 w-20 h-20 rounded-lg">
-                                                <img class="w-full h-full object-cover" src="../src/uploads/<?= $p['image'] ?>" alt="" />
+                                                <?php
+                                                if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $p['image'])) {
+                                                    echo '<img class="w-full h-full object-cover" src="../' . $p["image"] . '" alt="" />';
+                                                } else {
+                                                    echo '<img class="w-full h-full object-cover" src="../src/uploads/' . $p["image"] . '" alt="" />';
+                                                }
+                                                ?>
+
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-gray-900 whitespace-no-wrap">
@@ -87,9 +94,9 @@
 
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                        <a href="/admin/updateprod/<?= $p['id'] ?>">Edit</a>
+                                        <a href="/admin/updateprod?id=<?= $p['id'] ?>">Edit</a>
                                         ||
-                                        <a onclick="return confirm('Are you sure to delete?')" href="/admin/deleteprod/<?= $p['id'] ?>">Delete</a>
+                                        <a onclick="return confirm('Are you sure to delete?')" href="/admin/deleteprod?id=<?= $p['id'] ?>">Delete</a>
                                     </td>
                                 </tr>
                         <?php

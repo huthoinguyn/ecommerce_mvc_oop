@@ -3,6 +3,7 @@
 
 namespace App\Controllers;
 
+use App\Core\ValidateInput;
 use App\Interfaces\LoginTrait;
 use App\Controllers\BaseController;
 
@@ -10,6 +11,13 @@ class AuthController extends BaseController
 {
 
     use LoginTrait;
+
+    private $_validate;
+
+    public function __construct()
+    {
+        $this->_validate = new ValidateInput();
+    }
 
     public function getLogin()
     {

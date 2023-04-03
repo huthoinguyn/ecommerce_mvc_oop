@@ -8,6 +8,9 @@ use App\Interfaces\CRUDInterface;
 use App\Interfaces\Database;
 use App\Models\ConnectDatabaseException;
 
+/**
+ * Summary of BaseModel
+ */
 class BaseModel extends Database implements CRUDInterface
 {
 
@@ -84,6 +87,12 @@ class BaseModel extends Database implements CRUDInterface
         return $result;
     }
 
+    /**
+     * Summary of insert
+     * @param mixed $table
+     * @param mixed $data
+     * @return bool
+     */
     protected function insert($table, $data)
     {
         // Chuẩn bị câu truy vấn SQL

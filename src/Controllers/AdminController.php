@@ -3,12 +3,19 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Request;
 use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Products;
 
 class AdminController extends BaseController
 {
+    private $_request;
+
+    public function __construct()
+    {
+        $this->_request = new Request();
+    }
 
     public function index()
     {
@@ -54,29 +61,33 @@ class AdminController extends BaseController
             header("Location: /admin/brand");
         }
     }
-    public function deleteCat($id)
+    public function deleteCat()
     {
         $cat = new Categories();
-        $cat->deleteCategories((int)$id['id']);
+        $id = $this->_request->getParam('id');
+        $cat->deleteCategories((int)$id);
         header('location: /admin/cat');
     }
-    public function deleteBrand($id)
+    public function deleteBrand()
     {
+        $id = $this->_request->getParam('id');
         $brand = new Brands();
-        $brand->delBrand((int)$id['id']);
+        $brand->delBrand((int)$id);
         header('location: /admin/brand');
     }
-    public function updateCat($id)
+    public function updateCat()
     {
+        $id = $this->_request->getParam('id');
         $cat = new Categories();
-        $catSelect = $cat->selectCatById($id['id']);
+        $catSelect = $cat->selectCatById($id);
         $data = $catSelect;
         $this->render('admin/cateupdate', $data);
     }
     public function updateBrand($id)
     {
         $brand = new Brands();
-        $brandSelect = $brand->selectBrandById($id['id']);
+        $id = $this->_request->getParam('id');
+        $brandSelect = $brand->selectBrandById($id);
         $data = [
             "brand" => $brandSelect
         ];

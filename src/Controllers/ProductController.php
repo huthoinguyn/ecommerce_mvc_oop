@@ -3,9 +3,14 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Request;
+use App\Core\Upload;
+use App\Core\ValidateInput;
 use App\Models\Brands;
 use App\Models\Categories;
+use App\Models\Colors;
 use App\Models\Products;
+use App\Models\Variants;
 
 /**
  * Summary of ProductController
@@ -16,11 +21,20 @@ class ProductController extends BaseController
     private $brand;
     private $pd;
 
+    private $_validate;
+    private $_variant;
+    private $_color;
+    private $_request;
+
     public function __construct()
     {
         $this->cat = new Categories();
         $this->brand = new Brands();
         $this->pd = new Products();
+        $this->_validate = new ValidateInput();
+        $this->_variant = new Variants();
+        $this->_color = new Colors();
+        $this->_request = new Request();
     }
     public function index()
     {
@@ -70,11 +84,12 @@ class ProductController extends BaseController
         ];
         return $this->render('shop', $data);
     }
-    public function prodSelectByBrand($id)
+    public function prodSelectByBrand()
     {
+        $id = $this->_request->getParam('id');
         $cats = $this->cat->viewCategoryClient(['id', 'name', 'state'], '', 0);
         $brands = $this->brand->viewBrandClient(['id', 'name', 'state'], '', 0);
-        $prods = $this->pd->viewProducts(['*'], ['brandId' => (int)$id['id']], 'id ASC', 0);
+        $prods = $this->pd->viewProducts(['*'], ['brandId' => (int)$id], 'id ASC', 0);
         $data = [
             "prods" => $prods,
             "cats" => $cats,
@@ -83,9 +98,15 @@ class ProductController extends BaseController
         return $this->render('shop', $data);
     }
 
-    public function showDetails($id)
+    /**
+     * Summary of showDetails
+     * @param mixed $id
+     * @return void
+     */
+    public function showDetails()
     {
-        $prodDetails = $this->pd->prodSelectById((int)$id['id']);
+        $id = $this->_request->getParam('id');
+        $prodDetails = $this->pd->prodSelectById((int)$id);
         $data = [
             "details" => $prodDetails
         ];
@@ -94,11 +115,13 @@ class ProductController extends BaseController
 
     public function addProd()
     {
-        $catList = $this->cat->viewCategoryAdmin(['id', 'name'], '', 0);
+        $catList = $this->cat->viewCategoryClient(['id', 'name'], '', 0);
         $brandList = $this->brand->viewBrandClient(['id', 'name'], '', 0);
+        $colorList = $this->_color->viewAllColors(['id', 'color'], '', 0);
         $data = [
             "cats" => $catList,
             "brands" => $brandList,
+            "colors" => $colorList
         ];
         $this->render('admin/addProd', $data);
     }
@@ -108,54 +131,42 @@ class ProductController extends BaseController
         $brandList = $this->brand->viewBrandClient(['id', 'name'], '', 0);
         $name = $_POST['prodName'];
         $price = $_POST['price'];
-        $catId = (int)$_POST['category'];
+        $priceVariant[] = $_POST['price_variant'] ?? [];
+        $color[] = $_POST['color'] ?? [];
+        $quantity[] = $_POST['quantity'] ?? [];
+        $catId = (int)$_POST['category'] ?? [];
         $brandId = (int)$_POST['brand'];
         $description = $_POST['description'];
         $type = $_POST['type'];
-
-        $permited = array('jpg', 'jpeg', 'png', 'gif', 'webp');
+        $file = $_FILES['image'];
         $file_name = $_FILES['image']['name'];
-        $file_size = $_FILES['image']['size'];
-        $file_temp = $_FILES['image']['tmp_name'];
-
-        $div = explode('.', $file_name);
-        $file_ext = strtolower(end($div));
-        $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
-        $uploaded_image = 'src/uploads/' . $unique_image;
-        if ($name == "" || $catId == "" || $brandId == "" || $description == "" || $price == "" || $type == "" || $file_name == "") {
-            $data = [
-                "cats" => $catList,
-                "brands" => $brandList,
-                "message" => "<span class='text-red-600'>All fields are require</span>"
-            ];
-            $this->render('admin/addProd', $data);
+        if ($this->_validate->isEmpty([$name, $catId, $brandId, $description, $price, $type, $file_name])) {
+            $message = $this->_validate->getErrorMessage('All fields are required!');
         } else {
-            if ($file_size > 1048567) {
-                $data = [
-                    "cats" => $catList,
-                    "brands" => $brandList,
-                    "message" => "<span class='text-red-600'>Image size should be less than 10MB!</span>"
-                ];
-                $this->render('admin/addProd', $data);
-            } else if (in_array($file_ext, $permited) === false) {
-                $data = [
-                    "cats" => $catList,
-                    "brands" => $brandList,
-                    "message" => "<span class='text-red-600'>You can upload only:" . implode(',', $permited) . "</span>"
-                ];
-                $this->render('admin/addProd', $data);
-            } else {
-                move_uploaded_file($file_temp, $uploaded_image);
-
-                // var_dump()
-                $addProd = $this->pd->addProducts($name, $catId, $brandId, $description, (int)$type, $price, $unique_image);
+            $fileUpload = new Upload($file);
+            if ($fileUpload->uploadFile()) {
+                $addProd = $this->pd->addProducts($name, $catId, $brandId, $description, (int)$type, $price, $fileUpload->getTargetFile());
+                $prodId = $this->pd->last_insert_id();
+                if (!empty($priceVariant[0])) {
+                    foreach ($priceVariant[0] as $key => $value) {
+                        $this->_variant->insertVariant((int)$prodId[0]['id'], $catId, $brandId, $color[0][$key], $priceVariant[0][$key],  $quantity[0][$key]);
+                    }
+                }
                 if (!empty($addProd)) {
                     header("Location: /admin/prod");
                 } else {
                     header("Location: /admin/addprod");
                 }
+            } else {
+                $message = $this->_validate->getErrorMessage($fileUpload->getErrors());
             }
         }
+        $data = [
+            "cats" => $catList,
+            "brands" => $brandList,
+            "message" => $message
+        ];
+        $this->render('admin/addProd', $data);
     }
 
 
@@ -164,11 +175,12 @@ class ProductController extends BaseController
      * @param mixed $id
      * @return void
      */
-    public function updateProd($id)
+    public function updateProd()
     {
+        $id = $this->_request->getParam('id');
         $cats = $this->cat->viewCategoryClient(['id', 'name'], '', 0);
         $brands = $this->brand->viewBrandClient(['id', 'name'], '', 0);
-        $prodSelectById = $this->pd->prodSelectById((int)$id['id']);
+        $prodSelectById = $this->pd->prodSelectById((int)$id);
         $data = [
             "prod" => $prodSelectById,
             "cat" => $cats,
@@ -187,6 +199,7 @@ class ProductController extends BaseController
         $brandId = (int)$_POST['brand'];
         $description = $_POST['description'];
         $type = $_POST['type'];
+        $file = $_FILES['image'];
 
         $permited = array('jpg', 'jpeg', 'png', 'gif', 'webp');
         $file_name = $_FILES['image']['name'];
@@ -197,29 +210,14 @@ class ProductController extends BaseController
         $file_ext = strtolower(end($div));
         $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
         $uploaded_image = 'src/uploads/' . $unique_image;
-        if ($name == "" || $catId == "" || $brandId == "" || $description == "" || $price == "" || $type == "") {
-            $data = [
-                "cats" => $catList,
-                "brands" => $brandList,
-                "message" => "<span class='text-red-600'>All fields are require</span>"
-            ];
-            $this->render('admin/addProd', $data);
+        if ($this->_validate->isEmpty([$name, $catId, $brandId, $description, $price, $type])) {
+            $message = "<span class='text-red-600'>All fields are require!</span>";
         } else {
             if (!empty($file_name)) {
                 if ($file_size > 1048567) {
-                    $data = [
-                        "cats" => $catList,
-                        "brands" => $brandList,
-                        "message" => "<span class='text-red-600'>Image size should be less than 10MB!</span>"
-                    ];
-                    $this->render('admin/addProd', $data);
+                    $message = "<span class='text-red-600'>Image size should be less than 10MB!</span>";
                 } else if (in_array($file_ext, $permited) === false) {
-                    $data = [
-                        "cats" => $catList,
-                        "brands" => $brandList,
-                        "message" => "<span class='text-red-600'>You can upload only:" . implode(',', $permited) . "</span>"
-                    ];
-                    $this->render('admin/addProd', $data);
+                    $message = "<span class='text-red-600'>You can upload only:" . implode(',', $permited) . "</span>";
                 } else {
                     move_uploaded_file($file_temp, $uploaded_image);
                     // var_dump()
@@ -234,10 +232,17 @@ class ProductController extends BaseController
                 header("Location: /admin/updateprod/" . $id);
             }
         }
+        $data = [
+            "cats" => $catList,
+            "brands" => $brandList,
+            "message" => $message
+        ];
+        $this->render('admin/addProd', $data);
     }
-    public function deleteProd($id)
+    public function deleteProd()
     {
-        $this->pd->deleteProd((int)$id['id']);
+        $id = $this->_request->getParam('id');
+        $this->pd->deleteProd((int)$id);
         header('Location: /admin/prod');
     }
 }

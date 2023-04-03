@@ -3,21 +3,27 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Request;
 use App\Models\Carts;
 use App\Models\Products;
+use App\Models\Variants;
 
 class CartController extends BaseController
 {
 
     private $cart;
     private $pd;
+    private $_variant;
     private $_checkLogin;
     private $userId;
+    private $_request;
 
     public function __construct()
     {
         $this->cart = new Carts();
         $this->pd = new Products();
+        $this->_variant = new Variants();
+        $this->_request = new Request();
         $this->_checkLogin = BaseController::checkLogin();
         $this->userId = BaseController::get('userId');
     }
@@ -40,15 +46,17 @@ class CartController extends BaseController
     public function addToCart()
     {
         $prodId = $_POST['id'];
+        $colorId = $_POST['colorId'];
+        $variant = $this->_variant->prodSelectById($prodId);
         $prodDetails = $this->pd->prodSelectById($prodId);
         if (BaseController::get('checkLogin')) {
-            $qty = $this->validation($_POST['quantity']);
+            $qty = $_POST['quantity'];
             $sId = session_id();
-            $p = $this->pd->prodSelectById($prodId)[0];
-
+            $variant = $this->_variant->prodSelectByColor($prodId, $colorId)[0];
+            $p = $this->pd->prodSelectById($variant['prodId'])[0];
             $checkCart = $this->cart->checkCart($prodId, $this->userId);
             if (empty($checkCart)) {
-                $addCart = $this->cart->addCart($prodId, $this->userId, $sId, $p['name'], $p['price'], $p['image'], $qty);
+                $addCart = $this->cart->addCart((int)$prodId, $this->userId, $sId, $p['name'], $variant['price_variant'], $p['image'], $qty);
                 if (!empty($addCart)) {
                     $count = $this->cart->cartCount($this->userId);
                     BaseController::set('count', $count);
@@ -66,6 +74,7 @@ class CartController extends BaseController
         }
         $data = [
             "details" => $prodDetails,
+            "variants" => $variant,
             "message" => $message
         ];
         return $this->render('details', $data);
@@ -77,7 +86,7 @@ class CartController extends BaseController
         $cartId = (int)$_POST['cartId'];
 
         if (isset($quantity) && $quantity <= 0) {
-            $this->delCart($cartId);
+            header('Location: /deletecart?id=' . $cartId);
         } else {
             $cartUpdate = $this->cart->updateCart($quantity, $cartId);
             if (!empty($cartUpdate)) {
@@ -89,9 +98,10 @@ class CartController extends BaseController
             }
         }
     }
-    public function delCart($id)
+    public function delCart()
     {
-        $cartDel = $this->cart->delCart((int)(isset($id['id']) ? $id['id'] : $id));
+        $id = $this->_request->getParam('id');
+        $cartDel = $this->cart->delCart((int)$id);
         if (!empty($cartDel)) {
             $count = $this->cart->cartCount($this->userId);
             BaseController::set('count', $count);
