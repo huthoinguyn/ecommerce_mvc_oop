@@ -1,4 +1,7 @@
 <?php
+
+use App\Core\Helpers\SessionHelper;
+
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
 ?>
@@ -6,23 +9,18 @@ include __DIR__ . "/inc/navbar.php";
 <div class="contain py-16">
     <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
         <h2 class="text-2xl uppercase font-medium mb-1">Login</h2>
-        <p class="text-gray-600 mb-6 text-sm">
-            welcome back customer
-        </p>
-        <?php
-        // if (isset($data['message'])) {
-        //     echo $data['message'];
-        // }
-        ?>
+        <small class='text-primary mb-6'><?= SessionHelper::getError('loginError') ?></small>
         <form action="/login" method="POST" autocomplete="off">
             <div class="space-y-2">
                 <div>
                     <label for="username" class="text-gray-600 mb-2 block">Username</label>
                     <input type="text" name="username" id="username" value="<?= isset($data['username']) ? $data['username'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="username">
+                    <small class='text-primary'><?= SessionHelper::getError('username') ?></small>
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 block">Password</label>
                     <input type="password" name="password" id="password" value="<?= isset($data['password']) ? $data['password'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <small class='text-primary'><?= SessionHelper::getError('password') ?></small>
                 </div>
             </div>
             <div class="flex items-center justify-between mt-6">

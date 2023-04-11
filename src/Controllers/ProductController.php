@@ -245,4 +245,25 @@ class ProductController extends BaseController
         $this->pd->deleteProd((int)$id);
         header('Location: /admin/prod');
     }
+
+    public function getAllProd()
+    {
+        $fields = [
+            'tbl_product.id as id',
+            'tbl_product.name as name',
+            'tbl_product.price as price',
+            'tbl_product.image as image',
+            'tbl_product.type as type',
+            'tbl_category.name as catName',
+            'tbl_brand.name as brandName',
+        ];
+
+        $inner = [
+            'catId' => Categories::TABLE,
+            'brandId' => Brands::TABLE,
+        ];
+        $prodList = $this->pd->viewAllProducts($fields, $inner, [], '', 0);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($prodList);
+    }
 }

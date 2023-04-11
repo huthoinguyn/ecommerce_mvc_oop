@@ -59,12 +59,16 @@ class BaseModel extends Database implements CRUDInterface
 
         $where  = [];
         $params = [];
-        foreach ($conditions as $key => $value) {
-            $where[]  = $key . " = ?";
-            $params[] = $value;
-        }
-        if (!empty($where)) {
-            $sql .= " WHERE " . implode(" AND ", $where);
+        if (is_array($conditions)) {
+            foreach ($conditions as $key => $value) {
+                $where[]  = $key . " = ?";
+                $params[] = $value;
+            }
+            if (!empty($where)) {
+                $sql .= " WHERE " . implode(" AND ", $where);
+            }
+        }else{
+            $sql .= " WHERE " . $conditions;
         }
 
         if (!empty($order)) {

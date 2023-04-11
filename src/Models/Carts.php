@@ -15,16 +15,14 @@ class Carts extends BaseModel
     protected $table = "tbl_cart";
 
     // Thêm bài đăng
-    public function addCart($prodId, $userId, $sId, $prodName, $prodPrice, $prodImage, $qty)
+    public function addCart($prodId, $variantId, $userId, $sId,$qty)
     {
         $data = [
-            'prodId' => $prodId,
+            'prod_id' => $prodId,
+            'variant_id' => $variantId,
             'userId' => $userId,
             'sId' => $sId,
-            'prodName' => $prodName,
-            'price' => $prodPrice,
             'quantity' => $qty,
-            'image' => $prodImage,
             'created_at' => date('Y-m-d H:i:s'),
         ];
         return $this->createData($this->table, $data);
@@ -32,10 +30,18 @@ class Carts extends BaseModel
 
 
     // Sửa bài đăng
-    public function updateCart($quantity, $cartId)
+    /**
+     * Summary of updateCart
+     * @param mixed $variantId
+     * @param mixed $quantity
+     * @param mixed $cartId
+     * @return bool
+     */
+    public function updateCart($variantId, $quantity, $cartId)
     {
         $data = [
-            'quantity' => $quantity,
+            'variant_id' => (int)$variantId,
+            'quantity' => (int)$quantity,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -71,9 +77,24 @@ class Carts extends BaseModel
     }
 
 
-    public function viewAllCart($fields, $conditions, $order, $limit = 0)
+    public function viewAllCart($userId, $limit = 0)
     {
-        return $this->readData($this->table, $fields, $conditions, $order, $limit);
+        $fields = [
+            'tbl_cart.id as id',
+            'tbl_cart.quantity as quantity',
+            'tbl_cart.prod_id as prod_id',
+            'tbl_product_variant.id as variant_id',
+            'tbl_product.image as image',
+            'tbl_product.name as prodName',
+            'tbl_product_variant.price as price',
+            'tbl_product_variant.color_id as colorId',
+        ];
+        $inner = [
+            'variant_id' => Variants::TABLE,
+            'prod_id' => Products::TABLE,
+        ];
+        $conditions = ['userId' => $userId];
+        return $this->readDatas($this->table, $fields, $inner, $conditions, '', $limit);
     }
 
     public function selectCartById($id)
@@ -87,13 +108,14 @@ class Carts extends BaseModel
         return $this->readData($this->table, $fields, $conditions, '', 1);
     }
 
-    public function checkCart($prodId, $userId)
+    public function checkCart($prodId, $variantId, $userId)
     {
         $fields = [
             '*'
         ];
         $conditions = [
-            "prodId" => $prodId,
+            "prod_id" => $prodId,
+            "variant_id" => $variantId,
             "userId" => $userId
         ];
         return $this->readData($this->table, $fields, $conditions, '', 1);

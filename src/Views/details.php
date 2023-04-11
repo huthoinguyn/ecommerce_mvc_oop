@@ -30,7 +30,6 @@ if (isset($data['variants'])) {
 if (isset($data['details'])) {
     foreach ($data['details'] as $ps) {
 ?>
-        <input type="hidden" name="" class="prodId" value="<?= $ps['prodId'] ?>">
         <!-- product-detail -->
         <div class="container grid grid-cols-2 gap-6 auto-rows-fr">
             <div>
@@ -138,8 +137,9 @@ if (isset($data['details'])) {
                     </div>
                 </div>
                 <form action="/addtocart" method="POST">
-                    <input class="variantId" type="hidden" name="id" value="<?= $ps['prodId'] ?>">
-                    <input class="colorId" type="hidden" name="colorId" value="">
+                    <input class="prodId" type="hidden" name="prodId" value="<?= $ps['prodId'] ?>">
+                    <input class="variantId" type="hidden" name="variantId" value="">
+                    <!-- <input class="variantPrice" type="hidden" name="price" value=""> -->
                     <div class="qtyBox mt-4 hidden">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
@@ -199,7 +199,7 @@ if (isset($data['details'])) {
     colorItems.forEach(color => {
         color.onclick = () => {
             let prodState = true;
-            document.querySelector('.colorId').value = color.dataset.colorId
+            // document.querySelector('.colorId').value = color.dataset.colorId
             document.querySelector('#qty').value = 1;
             [...colorItems].map(color => color.classList.remove('active'))
             color.classList.add('active');
@@ -207,9 +207,11 @@ if (isset($data['details'])) {
             xhttp.onreadystatechange = async function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let data = await JSON.parse(this.response)
-                    qty = data[0].qty_variant
-                    document.querySelector('.price_variant').textContent = data[0].price_variant
+                    qty = +data[0].qty_variant
+                    document.querySelector('.price_variant').textContent = +data[0].price_variant
                     document.querySelector('.qty_variant').textContent = qty
+                    document.querySelector('.variantId').value = data[0].id
+                    
                     if (data[0].qty_variant <= 0) {
                         prodState = false;
                     }
@@ -228,7 +230,7 @@ if (isset($data['details'])) {
                         document.querySelector('#stock').textContent = 'Out Stock'
                         document.querySelector('.addToCartBtn').classList.add('disable')
                         document.querySelector('.qtyBox').classList.add('hidden')
-
+                        
                     }
                 }
             };

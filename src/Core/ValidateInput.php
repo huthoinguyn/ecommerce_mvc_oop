@@ -9,6 +9,8 @@ namespace App\Core;
 class ValidateInput
 {
 
+    public $isValid = true;
+
 
     /**
      * Kiểm tra xem một chuỗi có rỗng hay không
@@ -27,6 +29,7 @@ class ValidateInput
             return $check;
         } else {
             if (empty(trim($input))) {
+                $this->isValid = false;
                 return true;
             } else {
                 return false;
@@ -42,6 +45,7 @@ class ValidateInput
     public function isValidEmail($email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->isValid = false;
             return false;
         } else {
             return true;
@@ -57,6 +61,7 @@ class ValidateInput
     {
         $phone_pattern = "/^[0-9]{10,11}$/";
         if (!preg_match($phone_pattern, $phone)) {
+            $this->isValid = false;
             return false;
         } else {
             return true;
@@ -72,6 +77,7 @@ class ValidateInput
     {
         $password_pattern = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
         if (!preg_match($password_pattern, $password)) {
+            $this->isValid = false;
             return false;
         } else {
             return true;

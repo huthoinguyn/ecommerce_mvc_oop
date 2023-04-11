@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\BaseController;
+use App\Core\Helpers\SessionHelper;
 
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");

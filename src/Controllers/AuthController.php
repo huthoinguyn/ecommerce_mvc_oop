@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Core\ValidateInput;
 use App\Interfaces\LoginTrait;
 use App\Controllers\BaseController;
+use App\Core\Helpers\SessionHelper;
 
 class AuthController extends BaseController
 {
@@ -32,11 +33,17 @@ class AuthController extends BaseController
 
     public function postLogin()
     {
-        $data = [];
-        $username = $this->validation($_POST['username']);
-        $password = $this->validation($_POST['password']);
-        if (!empty($username) && !empty($password)) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        if ($this->_validate->isEmpty($username)) {
+            SessionHelper::setError('username', 'Username are required!');
+        }
+        if ($this->_validate->isEmpty($password)) {
+            SessionHelper::setError('password', 'Password are required!');
+        }
+        if (isset($this->_validate->isValid)) {
             $checkLogin = $this->login($username, md5($password));
+            var_dump(SessionHelper::getError('loginError'));
             if (!empty($checkLogin)) {
                 if (isset($checkLogin['position']) && $checkLogin['position'] == 1) {
                     BaseController::set('admin', true);
@@ -46,25 +53,32 @@ class AuthController extends BaseController
                 BaseController::set('userId', $checkLogin[0]['id']);
                 return $this->render('login-success');
             } else {
-                $message = "<div class='text-red-500 text-center p-2 bg-red-200'>Username or Password is not true!</div>";
+                SessionHelper::setError('loginError', 'Username or Password is not true!');
             }
-        } else {
-            $message = "<div class='text-red-500 text-center p-2 bg-red-200'>All Fields Are Required!</div>";
         }
         $data = [
             "username" => $username,
             "password" => $password,
-            "message" => $message
         ];
         $this->render('login', $data);
     }
     public function postRegister()
     {
-        $username = $this->validation($_POST['username']);
-        $password = $this->validation($_POST['password']);
-        $confirm = $this->validation($_POST['confirm']);
-        $email = $this->validation($_POST['email']);
-        $name = $this->validation($_POST['name']);
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $confirm = $_POST['confirm'];
+        $email = $_POST['email'];
+        $name = $_POST['name'];
+        if ($this->_validate->isEmpty($username)) {
+            SessionHelper::setError('emptyUsername', 'Username are required!');
+        }
+        if ($this->_validate->isEmpty($password)) {
+            SessionHelper::setError('emptyPassword', 'Password are required!');
+        }
+        if ($this->_validate->isEmpty($email)) {
+            SessionHelper::setError('emptyEmail', 'Email are required!');
+        }
+
         if (!empty($username) && !empty($password) && !empty($confirm) && !empty($name) && !empty($email)) {
             if (preg_match('/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/', $username)) {
                 if (preg_match('/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i', $email)) {

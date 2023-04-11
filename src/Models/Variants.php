@@ -48,20 +48,43 @@ class Variants extends BaseModel
             'tbl_color.color as colorName',
             'tbl_product_variant.qty as qty_variant',
         ];
-        
+
         $inner = [
             'cat_id' => Categories::TABLE,
             'brand_id' => Brands::TABLE,
             'prod_id' => Products::TABLE,
             'color_id' => Colors::TABLE
         ];
-        
+
         $conditions = [
             $this->table . ".prod_id" => $id
         ];
         return $this->readDatas($this->table, $fields, $inner, $conditions, '', 0);
     }
-    
+    public function VariantSelectById($id)
+    {
+        $fields = [
+            'tbl_product_variant.id as id',
+            'tbl_product.id as prodId',
+            'tbl_product_variant.price as price_variant',
+            'tbl_product_variant.color_id as colorId',
+            'tbl_color.color as colorName',
+            'tbl_product_variant.qty as qty_variant',
+        ];
+
+        $inner = [
+            'cat_id' => Categories::TABLE,
+            'brand_id' => Brands::TABLE,
+            'prod_id' => Products::TABLE,
+            'color_id' => Colors::TABLE
+        ];
+
+        $conditions = [
+            $this->table . ".id" => $id
+        ];
+        return $this->readDatas($this->table, $fields, $inner, $conditions, '', 0);
+    }
+
     public function prodSelectByColor($id, $colorId)
     {
         $fields = [
@@ -84,6 +107,27 @@ class Variants extends BaseModel
             $this->table . ".prod_id" => $id,
             $this->table . ".color_id" => $colorId
         ];
+        return $this->readDatas($this->table, $fields, $inner, $conditions, '', 0);
+    }
+    public function prodSelectByColorInStock($id, $colorId)
+    {
+        $fields = [
+            'tbl_product_variant.id as id',
+            'tbl_product.id as prodId',
+            'tbl_product_variant.price as price_variant',
+            'tbl_product_variant.color_id as colorId',
+            'tbl_color.color as colorName',
+            'tbl_product_variant.qty as qty_variant',
+        ];
+
+        $inner = [
+            'cat_id' => Categories::TABLE,
+            'brand_id' => Brands::TABLE,
+            'prod_id' => Products::TABLE,
+            'color_id' => Colors::TABLE
+        ];
+
+        $conditions = $this->table . ".prod_id =" . $id . " AND " . $this->table . ".color_id = " . $colorId . " AND " . $this->table . ".qty > 0";
         return $this->readDatas($this->table, $fields, $inner, $conditions, '', 0);
     }
 }

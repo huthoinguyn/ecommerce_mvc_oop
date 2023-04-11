@@ -3,8 +3,12 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Helpers\MailerHelper;
+use App\Core\Helpers\MailTemplate;
+use App\Core\Helpers\SessionHelper;
 use App\Core\Request;
 use App\Models\Carts;
+use App\Models\Colors;
 use App\Models\Products;
 use App\Models\Variants;
 
@@ -18,14 +22,19 @@ class CartController extends BaseController
     private $userId;
     private $_request;
 
+    private $_color;
+
+    private $_mail;
     public function __construct()
     {
         $this->cart = new Carts();
         $this->pd = new Products();
+        $this->_color = new Colors();
         $this->_variant = new Variants();
         $this->_request = new Request();
         $this->_checkLogin = BaseController::checkLogin();
         $this->userId = BaseController::get('userId');
+        $this->_mail = new MailTemplate();
     }
     public function index()
     {
@@ -36,67 +45,62 @@ class CartController extends BaseController
             $this->render("/login", $data);
         } else {
             $userId = BaseController::get('userId');
-            $carts = $this->cart->viewAllCart(['*'], ['userId' => $userId], '', 0);
+            $carts = $this->cart->viewAllCart($userId);
+            $variants = [];
+            foreach ($carts as $cart) {
+                $variants[] = $this->_variant->VariantSelectById((int)$cart['variant_id']);
+            }
             $data = [
                 "cart" => $carts,
+                "variants" => $variants,
             ];
             return $this->render('cart', $data);
         }
     }
     public function addToCart()
     {
-        $prodId = $_POST['id'];
-        $colorId = $_POST['colorId'];
-        $variant = $this->_variant->prodSelectById($prodId);
-        $prodDetails = $this->pd->prodSelectById($prodId);
+        $prodId = $_POST['prodId'];
+        $variantId = $_POST['variantId'];
         if (BaseController::get('checkLogin')) {
             $qty = $_POST['quantity'];
             $sId = session_id();
-            $variant = $this->_variant->prodSelectByColor($prodId, $colorId)[0];
-            $p = $this->pd->prodSelectById($variant['prodId'])[0];
-            $checkCart = $this->cart->checkCart($prodId, $this->userId);
+            $checkCart = $this->cart->checkCart($prodId, $variantId, $this->userId);
             if (empty($checkCart)) {
-                $addCart = $this->cart->addCart((int)$prodId, $this->userId, $sId, $p['name'], $variant['price_variant'], $p['image'], $qty);
+                $addCart = $this->cart->addCart((int)$prodId, (int)$variantId, $this->userId, $sId, $qty);
                 if (!empty($addCart)) {
                     $count = $this->cart->cartCount($this->userId);
                     BaseController::set('count', $count);
-                    $data = [
-                        "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
-                        "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Add to cart successfully.</div>"
-                    ];
-                    return $this->render('cart', $data);
+                    SessionHelper::setSuccess('cartSuccessMessage', "<div class='text-green-700 text-center p-2 bg-green-200'>Add to cart successfully.</div>");
+                    $this->index();
                 }
             } else {
-                $message = "<div class='text-red-500 text-center p-2 bg-red-200'>This product is already exist in your cart!</div>";
+                SessionHelper::setError('cartErrorMessage', "<div class='text-red-500 text-center p-2 bg-red-200'>This product is already exist in your cart!</div>");
             }
         } else {
-            $message = "<div class='text-red-500 text-center p-2 bg-red-200'>Please login to add to cart</div>";
+            SessionHelper::setError('cartErrorMessage', "<div class='text-red-500 text-center p-2 bg-red-200'>Please login to add to cart!</div>");
         }
-        $data = [
-            "details" => $prodDetails,
-            "variants" => $variant,
-            "message" => $message
-        ];
-        return $this->render('details', $data);
+        header('location: /details?id=' . $prodId);
     }
 
     public function updateCart()
     {
         $quantity = $_POST['quantity'];
-        $cartId = (int)$_POST['cartId'];
-
-        if (isset($quantity) && $quantity <= 0) {
-            header('Location: /deletecart?id=' . $cartId);
-        } else {
-            $cartUpdate = $this->cart->updateCart($quantity, $cartId);
-            if (!empty($cartUpdate)) {
-                $data = [
-                    "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
-                    "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Cart update successfully.</div>"
-                ];
-                return $this->render('cart', $data);
+        $cartId = $_POST['cartId'];
+        $variantId = $_POST['variantId'];
+        $stock = $this->_variant->VariantSelectById($variantId)[0]['qty_variant'];
+        if (isset($stock) && $quantity <= $stock) {
+            if (isset($quantity) && $quantity <= 0) {
+                header('Location: /deletecart?id=' . $cartId);
+            } else {
+                $cartUpdate = $this->cart->updateCart($variantId, $quantity, $cartId);
+                if (!empty($cartUpdate)) {
+                    SessionHelper::setSuccess('cartSuccessMessage', "<div class='text-green-700 text-center p-2 bg-green-200'>Update cart successfully.</div>");
+                }
             }
+        } else {
+            SessionHelper::setError('cartErrorMessage', "<div class='text-red-500 text-center p-2 bg-red-200'>This product is out of stock!</div>");
         }
+        return $this->index();
     }
     public function delCart()
     {
@@ -105,17 +109,10 @@ class CartController extends BaseController
         if (!empty($cartDel)) {
             $count = $this->cart->cartCount($this->userId);
             BaseController::set('count', $count);
-            $data = [
-                "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
-                "message" => "<div class='text-green-700 text-center p-2 bg-green-200'>Delete successfully.</div>"
-            ];
-            return $this->render('cart', $data);
+            SessionHelper::setSuccess('cartSuccessMessage', "<div class='text-green-700 text-center p-2 bg-green-200'>Delete successfully.</div>");
         } else {
-            $data = [
-                "cart" => $this->cart->viewAllCart(['*'], ['userId' => $this->userId], '', 0),
-                "message" => "<div class='text-red-500 text-center p-2 bg-red-200'>Something went wrong!</div>"
-            ];
-            return $this->render('cart', $data);
+            SessionHelper::setError('cartErrorMessage', "<div class='text-red-500 text-center p-2 bg-red-200'>Something went wrong!</div>");
         }
+        return $this->index();
     }
 }

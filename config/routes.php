@@ -11,7 +11,7 @@ use App\Controllers\ProductController;
 use App\Controllers\VariantController;
 
 $request = new Request();
-try {
+// try {
 
     Route::get('/', 'App\Controllers\HomeController@index');
     Route::get('/notfound', 'App\Controllers\HomeController@notFound');
@@ -20,11 +20,13 @@ try {
     Route::get('/login', 'App\Controllers\AuthController@getLogin');
     Route::post('/login', 'App\Controllers\AuthController@postLogin');
     Route::get('/logout', 'App\Controllers\AuthController@getLogout');
-    Route::post('/login', 'App\Controllers\AuthController@postLogin');
     Route::get('/register', 'App\Controllers\AuthController@getRegister');
     Route::post('/register', 'App\Controllers\AuthController@postRegister');
 
     Route::get('/about', 'App\Controllers\AboutController@viewAbout');
+
+    Route::get('/get_prod_api', 'App\Controllers\ProductController@getAllProd');
+
 
     Route::get('/shop', 'App\Controllers\ProductController@index');
     Route::get('/prodselectbycat{id}', 'App\Controllers\ProductController@prodSelectByCat');
@@ -56,9 +58,14 @@ try {
 
     Route::get('/details{id}', 'App\Controllers\VariantController@showDetails');
     Route::get('/color_variant{id}', 'App\Controllers\VariantController@getColorVariant');
+    
+    Route::get('/checkout', 'App\Controllers\CheckoutController@index');
+    Route::post('/order/momo', 'App\Controllers\Checkout\QRMomo@checkOut');
+    Route::post('/order/vnpay', 'App\Controllers\Checkout\VNPay@checkOut');
+
 
 
     Route::resolve();
-} catch (Exception $e) {
-    header('Location: /notfound');
-}
+// } catch (Exception $e) {
+//     header('Location: /notfound');
+// }

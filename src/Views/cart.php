@@ -1,4 +1,11 @@
 <?php
+
+use App\Core\Helpers\SessionHelper;
+
+    echo SessionHelper::getSuccess('cartSuccessMessage');
+    echo SessionHelper::getSuccess('cartErrorMessage');
+?>
+<?php
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
 ?>
@@ -10,20 +17,29 @@ include __DIR__ . "/inc/navbar.php";
                 <h1 class="font-semibold text-2xl">Shopping Cart</h1>
             </div>
             <div class="flex mt-10 mb-5">
-                <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
-                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
-                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
-                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+                <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/6">Product Details</h3>
+                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/6 text-center">Color</h3>
+                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/6 text-center">Quantity</h3>
+                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/6 text-center">Price</h3>
+                <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/6 text-center">Total</h3>
             </div>
             <?php
             $subTotal = 0;
             if (!empty($data['cart'])) {
-                foreach ($data['cart'] as $cs) {
+                foreach ($data['cart'] as $key => $cs) {
                     $subTotal += $cs['price'] * $cs['quantity'];
             ?>
+                    <?php
+                    $variantId = null;
+                    $colorId = null;
+                    foreach ($data['variants'][$key] as $var) {
+                        $color = $var['colorName'];
+                        $variantId = $var['id'];
+                    }
+                    ?>
                     <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-                        <div class="flex w-2/5"> <!-- product -->
-                            <div class=" h-24 overflow-hidden">
+                        <div class="flex w-2/6"> <!-- product -->
+                            <div class="w-1/3 overflow-hidden">
                                 <?php
                                 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $cs['image'])) : ?>
                                     <img src="<?= $cs['image'] ?>" class="w-full h-full object-cover">
@@ -31,9 +47,9 @@ include __DIR__ . "/inc/navbar.php";
                                     <img src="src/uploads/<?= $cs['image'] ?>" class="w-full h-full object-cover">
                                 <?php endif; ?>
                             </div>
-                            <div class="flex flex-col justify-between ml-4 flex-grow">
+                            <div class="flex w-2/3 flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">
-                                    <a href="/details?id=<?= $cs['prodId'] ?>">
+                                    <a href="/details?id=<?= $cs['prod_id'] ?>">
                                         <?= $cs['prodName'] ?>
                                     </a>
                                 </span>
@@ -41,15 +57,19 @@ include __DIR__ . "/inc/navbar.php";
                                 <a onclick="return confirm('Are you sure to delete?')" href="/deletecart?id=<?= $cs['id'] ?>" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
                             </div>
                         </div>
-                        <div class="flex justify-center w-1/5">
-                            <form action="/updatecart" method="POST">
-                                <input type="hidden" name="cartId" value="<?= $cs['id'] ?>">
-                                <input type="hidden" name="updateQty">
+                        <form action="/updatecart" method="POST" class='flex w-2/6'>
+                            <input type="hidden" name="cartId" value="<?= $cs['id'] ?>">
+                            <input type="hidden" name="prodId" value="<?= $cs['prod_id'] ?>">
+                            <input type="hidden" name="variantId" value="<?= $variantId ?>">
+                            <div class="flex justify-center w-1/2">
+                                <input class="mx-2 pl-2 pr-1 py-2 border text-center w-16 outline-none" name="color" type="text" value="<?= @$color ?>" readonly>
+                            </div>
+                            <div class="flex justify-center w-1/2">
                                 <input onchange="this.form.submit()" class="mx-2 pl-2 pr-1 py-2 border text-center w-16" name="quantity" type="number" min="0" value="<?= $cs['quantity'] ?>">
-                            </form>
-                        </div>
-                        <span class="text-center w-1/5 font-semibold text-sm">$<?= number_format($cs['price'], 2) ?></span>
-                        <span class="text-center w-1/5 font-semibold text-sm">$<?= number_format($cs['price'] * $cs['quantity'], 2) ?></span>
+                            </div>
+                        </form>
+                        <span class="text-center w-1/6 font-semibold text-sm">$<?= number_format($cs['price'], 2) ?></span>
+                        <span class="text-center w-1/6 font-semibold text-sm">$<?= number_format($cs['price'] * $cs['quantity'], 2) ?></span>
                     </div>
             <?php
                 }
@@ -89,7 +109,7 @@ include __DIR__ . "/inc/navbar.php";
                     <span>Total cost</span>
                     <span>$<?= number_format($subTotal != 0 ? $subTotal + 10 : $subTotal, 2) ?></span>
                 </div>
-                <button class="bg-primary font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+                <a href="/checkout" class="bg-primary block text-center font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">Checkout</a>
             </div>
         </div>
 

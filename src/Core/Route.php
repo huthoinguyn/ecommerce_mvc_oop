@@ -52,6 +52,6 @@ class Route
         }
 
         http_response_code(404);
-        header('Location: /notfound');
+        // header('Location: /notfound');
     }
 }

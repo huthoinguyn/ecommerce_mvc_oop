@@ -28,4 +28,13 @@ class Colors extends BaseModel
         ];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
+
+    public function colorSelectById($id,$fields){
+        $conditions = [
+            "id" => $id
+        ];
+        $order = '';
+        $limit = 1;
+        return $this->readData($this->table,$fields, $conditions, $order, $limit);
+    }
 }
