@@ -15,13 +15,16 @@ $request = new Request();
 
     Route::get('/', 'App\Controllers\HomeController@index');
     Route::get('/notfound', 'App\Controllers\HomeController@notFound');
-
+    Route::get('/my-order', 'App\Controllers\HomeController@myOrder');
 
     Route::get('/login', 'App\Controllers\AuthController@getLogin');
     Route::post('/login', 'App\Controllers\AuthController@postLogin');
     Route::get('/logout', 'App\Controllers\AuthController@getLogout');
     Route::get('/register', 'App\Controllers\AuthController@getRegister');
     Route::post('/register', 'App\Controllers\AuthController@postRegister');
+    Route::get('/active-account', 'App\Controllers\AuthController@getActive');
+    Route::post('/active-account', 'App\Controllers\AuthController@postActive');
+    Route::get('/verify-account{id}', 'App\Controllers\AuthController@verifyAccount');
 
     Route::get('/about', 'App\Controllers\AboutController@viewAbout');
 
@@ -58,8 +61,10 @@ $request = new Request();
 
     Route::get('/details{id}', 'App\Controllers\VariantController@showDetails');
     Route::get('/color_variant{id}', 'App\Controllers\VariantController@getColorVariant');
+    Route::get('/variant/delete{id}', 'App\Controllers\VariantController@deleteVariant');
     
     Route::get('/checkout', 'App\Controllers\CheckoutController@index');
+    Route::post('/order/offline', 'App\Controllers\CheckoutController@checkOut');
     Route::post('/order/momo', 'App\Controllers\Checkout\QRMomo@checkOut');
     Route::post('/order/vnpay', 'App\Controllers\Checkout\VNPay@checkOut');
 

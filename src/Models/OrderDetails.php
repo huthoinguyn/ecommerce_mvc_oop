@@ -8,36 +8,38 @@ use App\Models\DeleteException;
 /**
  * Summary of Products
  */
-class Brands extends BaseModel
+class OrderDetails extends BaseModel
 {
 
     // ghi đè method và cả (thuộc tính) của class cha
-    protected $table = "tbl_brand";
+    protected $table = "tbl_order_details";
 
-    CONST TABLE = 'tbl_brand';
+    const TABLE = 'tbl_order_details';
 
-    public function getTable (){
+    public function getTable()
+    {
         return self::$table;
     }
 
     // Thêm bài đăng
-    public function addBrand($name, $state)
+    public function addOrderDetails($order_id, $prod_id, $variant_id, $quantity)
     {
         $data = [
-            'name' => $name,
-            'state' => $state,
-            'created_at' => date('Y-m-d H:i:s'),
+            'order_id' => $order_id,
+            'prod_id' => $prod_id,
+            'variant_id' => $variant_id,
+            'quantity' => $quantity,
         ];
         return $this->createData($this->table, $data);
     }
 
 
     // Sửa bài đăng
-    public function updateBrand($id, $name, $state)
+    public function updatePost($id, $title, $content)
     {
         $data = [
-            'name' => $name,
-            'state' => $state,
+            'title' => $title,
+            'content' => $content,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -54,7 +56,7 @@ class Brands extends BaseModel
      * @throws DeleteException
      * @return void
      */
-    public function delBrand($id)
+    public function delOrder($id)
     {
         try {
             if (!is_integer($id)) {
@@ -74,20 +76,20 @@ class Brands extends BaseModel
 
 
     // Xem bài đăng
-    public function viewBrandClient($fields, $order, $limit = 0)
+    public function viewOrderClient($fields, $order, $limit = 0)
     {
         $conditions = [
             "state" => 1
         ];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
-    public function viewBrandAdmin($fields, $order, $limit = 0)
+    public function viewOrderAdmin($fields, $order, $limit = 0)
     {
         $conditions = [];
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
 
-    public function selectBrandById($id)
+    public function selectOrderById($id)
     {
         $fields = [
             'id', 'name', 'state'

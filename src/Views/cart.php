@@ -2,12 +2,12 @@
 
 use App\Core\Helpers\SessionHelper;
 
-    echo SessionHelper::getSuccess('cartSuccessMessage');
-    echo SessionHelper::getSuccess('cartErrorMessage');
-?>
-<?php
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
+?>
+<?php
+echo SessionHelper::getSuccess('cartSuccessMessage');
+echo SessionHelper::getSuccess('cartErrorMessage');
 ?>
 
 <div class="container mx-auto mt-10">

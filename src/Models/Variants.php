@@ -130,4 +130,11 @@ class Variants extends BaseModel
         $conditions = $this->table . ".prod_id =" . $id . " AND " . $this->table . ".color_id = " . $colorId . " AND " . $this->table . ".qty > 0";
         return $this->readDatas($this->table, $fields, $inner, $conditions, '', 0);
     }
+
+    public function deleteVariant($id){
+        $conditions = [
+            'id' => $id
+        ];
+        return $this->deleteData($this->table, $conditions);
+    }
 }

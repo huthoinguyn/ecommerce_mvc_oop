@@ -1,8 +1,8 @@
 <?php
 
-use App\Controllers\BaseController;
+use App\Core\Helpers\SessionHelper;
 
-if ((BaseController::get('user'))[0]['position'] == 0) {
+if ((SessionHelper::get('user'))[0]['position'] == 0) {
     header('Location: /notfound');
 }
 header("Cache-Control: no-cache, must-revalidate");

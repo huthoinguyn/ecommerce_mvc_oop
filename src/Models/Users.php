@@ -14,67 +14,34 @@ class Users extends BaseModel
     // ghi đè method và cả (thuộc tính) của class cha
     protected $table = "tbl_user";
 
-    // Thêm bài đăng
-    public function addUser($title, $content)
+    public function addUser($data)
     {
-        $data = [
-            'title' => $title,
-            'content' => $content,
-            'created_at' => date('Y-m-d H:i:s'),
-        ];
-
         return $this->createData($this->table, $data);
     }
-
-
-    // Sửa bài đăng
-    public function updatePost($id, $title, $content)
-    {
-        $data = [
-            'title' => $title,
-            'content' => $content,
-            'updated_at' => date('Y-m-d H:i:s'),
-        ];
-
-        $conditions = [
-            'id' => $id,
-        ];
-
-        return $this->updateData($this->table, $data, $conditions);
-    }
-
-    /**
-     * Summary of deletePost
-     * @param int $id
-     * @throws DeleteException
-     * @return void
-     */
-    public function deletePost($id)
-    {
-        try {
-            if (!is_integer($id)) {
-                throw new DeleteException();
-            }
-
-            $conditions = [
-                'id' => $id,
-            ];
-
-            return $this->deleteData($this->table, $conditions);
-        } catch (DeleteException $e) {
-            // xử lý 1 cái gì đó mượt mà hơn
-            echo $e->getCustomMessage();
-        }
-    }
-
-
-    // Xem bài đăng
     public function viewUser($fields, $conditions, $order, $limit)
     {
         return $this->readData($this->table, $fields, $conditions, $order, $limit);
     }
-    public function viewAllProducts($fields, $conditions, $limit)
+    public function checkUsernameExist($username)
     {
-        // return $this->readData($this->table, $fields, $conditions, $limit);
+        $fields = ['username', 'code'];
+        $conditions = [
+            'username' => $username
+        ];
+        $order = '';
+        $limit = 1;
+        return $this->readData($this->table, $fields, $conditions, $order, $limit);
+    }
+    public function activeAccount($username)
+    {
+        $data = [
+            'status' => 1,
+            'code' => ''
+        ];
+        $conditions = [
+            'username' => $username,
+        ];
+
+        return $this->updateData($this->table, $data, $conditions);
     }
 }

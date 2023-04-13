@@ -892,10 +892,6 @@ h1,
   margin-top: 2rem;
 }
 
-.mt-auto{
-  margin-top: auto;
-}
-
 .box-content{
   box-sizing: content-box;
 }
@@ -1794,10 +1790,6 @@ h1,
   padding-top: 1rem;
 }
 
-.pt-5{
-  padding-top: 1.25rem;
-}
-
 .pt-6{
   padding-top: 1.5rem;
 }
@@ -2202,6 +2194,11 @@ h1,
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-800:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -2429,6 +2426,18 @@ h1,
 
   .sm\:w-7\/12{
     width: 58.333333%;
+  }
+
+  .sm\:w-9\/12{
+    width: 75%;
+  }
+
+  .sm\:w-4\/12{
+    width: 33.333333%;
+  }
+
+  .sm\:w-3\/4{
+    width: 75%;
   }
 
   .sm\:grid-cols-2{

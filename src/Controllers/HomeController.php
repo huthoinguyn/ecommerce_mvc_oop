@@ -23,4 +23,7 @@ class HomeController extends BaseController
     {
         return $this->render('404');
     }
+    public function myOrder(){
+        $this->index();
+    }
 }

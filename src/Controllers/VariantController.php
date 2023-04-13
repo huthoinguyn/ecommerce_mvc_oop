@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Helpers\SessionHelper;
 use App\Core\Request;
 use App\Models\Products;
 use App\Models\Variants;
@@ -38,5 +39,12 @@ class VariantController extends BaseController
         $prodId  = $this->_request->getQueryParams()['prod_id'] ?? null;
         $prodVariantDetails = $this->_variant->prodSelectByColor($prodId, $colorId);
         echo json_encode($prodVariantDetails);
+    }
+
+    public function deleteVariant()
+    {
+        $id = $this->_request->getParam('var_id');
+        $res = $this->_variant->deleteVariant((int)$id);
+        echo json_encode($res);
     }
 }

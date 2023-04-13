@@ -1,6 +1,12 @@
 <?php
+
+use App\Core\Helpers\SessionHelper;
+
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
+if (SessionHelper::get('checkLogin')) {
+    header('location: /notfound');
+}
 ?>
 
 <style>
@@ -34,11 +40,7 @@ include __DIR__ . "/inc/navbar.php";
                         </div>
                     </label>
                     <input type="text" name="username" id="username" value="<?= isset($data['values']) ? $data['values']['username'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Username">
-
-
-
-
-
+                    <small class='text-primary'><?= SessionHelper::getError('username') ?></small>
                 </div>
                 <div>
                     <label for="name" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Full Name
@@ -51,6 +53,7 @@ include __DIR__ . "/inc/navbar.php";
                         </div>
                     </label>
                     <input type="text" name="name" id="name" value="<?= isset($data['values']) ? $data['values']['name'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="Full Name">
+                    <small class='text-primary'><?= SessionHelper::getError('fullname') ?></small>
                 </div>
                 <div>
                     <label for="email" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Email address
@@ -63,6 +66,7 @@ include __DIR__ . "/inc/navbar.php";
                         </div>
                     </label>
                     <input type="email" name="email" id="email" value="<?= isset($data['values']) ? $data['values']['email'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="user@mail.com">
+                    <small class='text-primary'><?= SessionHelper::getError('email') ?></small>
                 </div>
                 <div>
                     <label for="password" class="text-gray-600 mb-2 relative flex flex-wrap items-center group">Password
@@ -75,10 +79,12 @@ include __DIR__ . "/inc/navbar.php";
                         </div>
                     </label>
                     <input type="password" name="password" id="password" value="<?= isset($data['values']) ? $data['values']['password'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <small class='text-primary'><?= SessionHelper::getError('password') ?></small>
                 </div>
                 <div>
                     <label for="confirm" class="text-gray-600 mb-2 block">Confirm password</label>
                     <input type="password" name="confirm" id="confirm" value="<?= isset($data['values']) ? $data['values']['confirm'] : '' ?>" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400" placeholder="*******">
+                    <small class='text-primary'><?= SessionHelper::getError('cfpassword') ?></small>
                 </div>
             </div>
             <div class="mt-6">

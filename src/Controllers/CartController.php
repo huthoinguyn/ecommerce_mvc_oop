@@ -32,8 +32,8 @@ class CartController extends BaseController
         $this->_color = new Colors();
         $this->_variant = new Variants();
         $this->_request = new Request();
-        $this->_checkLogin = BaseController::checkLogin();
-        $this->userId = BaseController::get('userId');
+        $this->_checkLogin = SessionHelper::checkLogin();
+        $this->userId = SessionHelper::get('userId');
         $this->_mail = new MailTemplate();
     }
     public function index()
@@ -44,7 +44,7 @@ class CartController extends BaseController
             ];
             $this->render("/login", $data);
         } else {
-            $userId = BaseController::get('userId');
+            $userId = SessionHelper::get('userId');
             $carts = $this->cart->viewAllCart($userId);
             $variants = [];
             foreach ($carts as $cart) {
@@ -61,15 +61,13 @@ class CartController extends BaseController
     {
         $prodId = $_POST['prodId'];
         $variantId = $_POST['variantId'];
-        if (BaseController::get('checkLogin')) {
+        if (SessionHelper::get('checkLogin')) {
             $qty = $_POST['quantity'];
             $sId = session_id();
             $checkCart = $this->cart->checkCart($prodId, $variantId, $this->userId);
             if (empty($checkCart)) {
                 $addCart = $this->cart->addCart((int)$prodId, (int)$variantId, $this->userId, $sId, $qty);
                 if (!empty($addCart)) {
-                    $count = $this->cart->cartCount($this->userId);
-                    BaseController::set('count', $count);
                     SessionHelper::setSuccess('cartSuccessMessage', "<div class='text-green-700 text-center p-2 bg-green-200'>Add to cart successfully.</div>");
                     $this->index();
                 }
@@ -107,8 +105,6 @@ class CartController extends BaseController
         $id = $this->_request->getParam('id');
         $cartDel = $this->cart->delCart((int)$id);
         if (!empty($cartDel)) {
-            $count = $this->cart->cartCount($this->userId);
-            BaseController::set('count', $count);
             SessionHelper::setSuccess('cartSuccessMessage', "<div class='text-green-700 text-center p-2 bg-green-200'>Delete successfully.</div>");
         } else {
             SessionHelper::setError('cartErrorMessage', "<div class='text-red-500 text-center p-2 bg-red-200'>Something went wrong!</div>");

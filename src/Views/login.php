@@ -4,6 +4,10 @@ use App\Core\Helpers\SessionHelper;
 
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
+if(SessionHelper::get('checkLogin')){
+    header('location: /notfound');
+}
+echo SessionHelper::getSuccess('login');
 ?>
 <!-- login -->
 <div class="contain py-16">

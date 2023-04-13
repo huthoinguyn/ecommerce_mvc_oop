@@ -132,4 +132,11 @@ class Carts extends BaseModel
         ];
         return $this->readData($this->table, $fields, $conditions, '', 1);
     }
+
+    public function cartDeleteAll($user_id){
+        $conditions = [
+            'userId' => $user_id
+        ];
+        return $this->deleteData($this->table, $conditions);
+    }
 }

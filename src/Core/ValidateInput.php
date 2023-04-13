@@ -44,7 +44,29 @@ class ValidateInput
      */
     public function isValidEmail($email)
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $email_pattern = '/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i';
+        if (!preg_match($email_pattern, $email)) {
+            $this->isValid = false;
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function isValidUsername($username)
+    {
+        $username_pattern = "/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/";
+        if (!preg_match($username_pattern, $username)) {
+            $this->isValid = false;
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public function isValidFullname($fullname)
+    {
+        $fullname_pattern = "/^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$/i";
+        if (!preg_match($fullname_pattern, $fullname)) {
             $this->isValid = false;
             return false;
         } else {
@@ -75,12 +97,21 @@ class ValidateInput
      */
     public function isValidPassword($password)
     {
-        $password_pattern = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
+        $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/';
         if (!preg_match($password_pattern, $password)) {
             $this->isValid = false;
             return false;
         } else {
             return true;
+        }
+    }
+    public function matchPassword($password, $confirm)
+    {
+        if ($password === $confirm) {
+            return true;
+        } else {
+            $this->isValid = false;
+            return false;
         }
     }
 
@@ -96,10 +127,31 @@ class ValidateInput
     {
         $length = strlen($input);
         if ($length < $min || $length > $max) {
+            $this->isValid = false;
             return false;
         } else {
             return true;
         }
+    }
+
+    public function validation($data)
+    {
+        $data = trim($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    public function textShorten($text, $limit = 400)
+    {
+        $text = $text . " ";
+        $text = substr($text, 0, $limit);
+        $text = substr($text, 0, strrpos($text, ' '));
+        $text = $text . ".....";
+        return $text;
+    }
+    public function formatDate($date)
+    {
+        return date('F j, Y, g:i a', strtotime($date));
     }
 
     public function getSuccessMessage($msg)

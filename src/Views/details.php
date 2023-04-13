@@ -1,6 +1,12 @@
 <?php
+
+use App\Core\Helpers\SessionHelper;
+
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/navbar.php";
+?>
+<?php
+echo SessionHelper::getError('cartErrorMessage');
 ?>
 
 <!-- breadcrumb -->

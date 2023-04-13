@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Core\Helpers\SessionHelper;
 use App\Core\Request;
 use App\Core\Upload;
 use App\Core\ValidateInput;
@@ -181,17 +182,19 @@ class ProductController extends BaseController
         $cats = $this->cat->viewCategoryClient(['id', 'name'], '', 0);
         $brands = $this->brand->viewBrandClient(['id', 'name'], '', 0);
         $prodSelectById = $this->pd->prodSelectById((int)$id);
+        $variants = $this->_variant->prodSelectById((int)$id);
+        $colorList = $this->_color->viewAllColors(['id', 'color'], '', 0);
         $data = [
             "prod" => $prodSelectById,
             "cat" => $cats,
-            "brand" => $brands
+            "brand" => $brands,
+            "variants" => $variants,
+            "colors" => $colorList
         ];
         $this->render('admin/productupdate', $data);
     }
     public function postUpdateProd()
     {
-        $catList = $this->cat->viewCategoryClient(['id', 'name'], '', 0);
-        $brandList = $this->brand->viewBrandClient(['id', 'name'], '', 0);
         $id = (int)$_POST['id'];
         $name = $_POST['prodName'];
         $price = $_POST['price'];
@@ -201,43 +204,26 @@ class ProductController extends BaseController
         $type = $_POST['type'];
         $file = $_FILES['image'];
 
-        $permited = array('jpg', 'jpeg', 'png', 'gif', 'webp');
-        $file_name = $_FILES['image']['name'];
-        $file_size = $_FILES['image']['size'];
-        $file_temp = $_FILES['image']['tmp_name'];
-
-        $div = explode('.', $file_name);
-        $file_ext = strtolower(end($div));
-        $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
-        $uploaded_image = 'src/uploads/' . $unique_image;
+        $file_name = $file['name'];
         if ($this->_validate->isEmpty([$name, $catId, $brandId, $description, $price, $type])) {
-            $message = "<span class='text-red-600'>All fields are require!</span>";
+            SessionHelper::setError('updateProd', 'All field are required!');
         } else {
             if (!empty($file_name)) {
-                if ($file_size > 1048567) {
-                    $message = "<span class='text-red-600'>Image size should be less than 10MB!</span>";
-                } else if (in_array($file_ext, $permited) === false) {
-                    $message = "<span class='text-red-600'>You can upload only:" . implode(',', $permited) . "</span>";
+                $fileUpload = new Upload($file);
+                if ($fileUpload->uploadFile()) {
+                    $updateProd = $this->pd->updateProd($id, $name, $catId, $brandId, $description, (int)$type, $price, $fileUpload->getTargetFile());
                 } else {
-                    move_uploaded_file($file_temp, $uploaded_image);
-                    // var_dump()
-                    $updateProd = $this->pd->updateProd($id, $name, $catId, $brandId, $description, (int)$type, $price, $unique_image);
+                    SessionHelper::setError('image', $this->_validate->getErrorMessage($fileUpload->getErrors()));
                 }
             } else {
                 $updateProd = $this->pd->updateProdnonImage($id, $name, $catId, $brandId, $description, $type, $price);
             }
-            if (!empty($updateProd)) {
-                header("Location: /admin/prod");
-            } else {
-                header("Location: /admin/updateprod/" . $id);
-            }
         }
-        $data = [
-            "cats" => $catList,
-            "brands" => $brandList,
-            "message" => $message
-        ];
-        $this->render('admin/addProd', $data);
+        if (!empty($updateProd)) {
+            header("Location: /admin/prod");
+        } else {
+            header("Location: /admin/updateprod/" . $id);
+        }
     }
     public function deleteProd()
     {

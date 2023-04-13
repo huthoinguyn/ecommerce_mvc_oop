@@ -10,10 +10,10 @@ use App\Models\Users;
 
 trait LoginTrait
 {
-    private $fm;
+    // private $_user;
     public function __construct()
     {
-        // $this->fm = new Format();
+        // 
     }
     public function login($username, $password)
     {
@@ -22,25 +22,35 @@ trait LoginTrait
         $condition = [
             "username" => $username,
             "password" => $password,
+            "status" => 1,
         ];
         $result = $user->viewUser($field, $condition, '', 1);
         return $result;
     }
-    public function register($username, $email, $name, $password, $image = '', $status = 1, $position = 0)
+    public function active($code)
     {
         $user = new Users();
-        // $field = ['id', 'username', 'name', 'password'];
+        $field = ['*'];
+        $condition = [
+            "code" => $code,
+        ];
+        $result = $user->viewUser($field, $condition, '', 1);
+        return $result;
+    }
+    public function register($username, $email, $name, $password, $code, $image = '', $position = 0)
+    {
+        $user = new Users();
         $data = [
             "username" => $username,
             "email" => $email,
             "name" => $name,
             "password" => $password,
             "image" => $image,
-            "status" => $status,
-            "position" => $position
+            "status" => 0,
+            "position" => $position,
+            "code" => $code
         ];
-        $table = 'tbl_user';
-        return $user->createData($table, $data);
+        return $user->addUser($data);
     }
 
     public function logout()
