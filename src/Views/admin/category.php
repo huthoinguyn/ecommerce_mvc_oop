@@ -89,11 +89,11 @@
 
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <a href="/admin/updatecat/<?= $ct['id'] ?>">
+                                            <a href="/admin/updatecat?id=<?= $ct['id'] ?>">
                                                 Edit
                                             </a>
                                             ||
-                                            <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletecat/<?= $ct['id'] ?>">
+                                            <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletecat?id=<?= $ct['id'] ?>">
                                                 Delete
                                             </a>
                                         </td>

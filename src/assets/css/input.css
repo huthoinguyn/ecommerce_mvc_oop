@@ -31,4 +31,10 @@
   .view-details {
     @apply hidden group-hover:block group-hover:animate-fadeIn w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition;
   }
+  .color-selector.active {
+    @apply text-primary border-primary;
+  }
+  .addToCartBtn.disable {
+    @apply opacity-20 pointer-events-none cursor-default;
+  }
 }

@@ -33,11 +33,11 @@ class Brands extends BaseModel
 
 
     // Sửa bài đăng
-    public function updatePost($id, $title, $content)
+    public function updateBrand($id, $name, $state)
     {
         $data = [
-            'title' => $title,
-            'content' => $content,
+            'name' => $name,
+            'state' => $state,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 

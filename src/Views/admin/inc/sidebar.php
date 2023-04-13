@@ -2,10 +2,10 @@
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
-			<span class="text">AdminHub</span>
+			<span class="text">T-Store Admin</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li>
 				<a href="/admin">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>

@@ -8,6 +8,9 @@ use App\Interfaces\CRUDInterface;
 use App\Interfaces\Database;
 use App\Models\ConnectDatabaseException;
 
+/**
+ * Summary of BaseModel
+ */
 class BaseModel extends Database implements CRUDInterface
 {
 
@@ -56,12 +59,16 @@ class BaseModel extends Database implements CRUDInterface
 
         $where  = [];
         $params = [];
-        foreach ($conditions as $key => $value) {
-            $where[]  = $key . " = ?";
-            $params[] = $value;
-        }
-        if (!empty($where)) {
-            $sql .= " WHERE " . implode(" AND ", $where);
+        if (is_array($conditions)) {
+            foreach ($conditions as $key => $value) {
+                $where[]  = $key . " = ?";
+                $params[] = $value;
+            }
+            if (!empty($where)) {
+                $sql .= " WHERE " . implode(" AND ", $where);
+            }
+        }else{
+            $sql .= " WHERE " . $conditions;
         }
 
         if (!empty($order)) {
@@ -84,6 +91,12 @@ class BaseModel extends Database implements CRUDInterface
         return $result;
     }
 
+    /**
+     * Summary of insert
+     * @param mixed $table
+     * @param mixed $data
+     * @return bool
+     */
     protected function insert($table, $data)
     {
         // Chuẩn bị câu truy vấn SQL

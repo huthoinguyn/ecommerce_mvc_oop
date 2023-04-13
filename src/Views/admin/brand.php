@@ -102,7 +102,7 @@
 
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <a href="/admin/updatebrand/<?= $br['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletebrand/<?= $br['id'] ?>">Delete</a>
+                                            <a href="/admin/updatebrand?id=<?= $br['id'] ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete?')" href="/admin/deletebrand?id=<?= $br['id'] ?>">Delete</a>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                             <button type="button" class="inline-block text-gray-500 hover:text-gray-700">

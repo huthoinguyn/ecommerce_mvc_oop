@@ -8,55 +8,69 @@ use App\Controllers\AuthController;
 use App\Controllers\CartController;
 use App\Controllers\PostController;
 use App\Controllers\ProductController;
+use App\Controllers\VariantController;
 
 $request = new Request();
 // try {
 
-Route::get('/', HomeController::class . '@index');
-Route::get('/notfound', HomeController::class . '@notFound');
+    Route::get('/', 'App\Controllers\HomeController@index');
+    Route::get('/notfound', 'App\Controllers\HomeController@notFound');
+    Route::get('/my-order', 'App\Controllers\HomeController@myOrder');
+
+    Route::get('/login', 'App\Controllers\AuthController@getLogin');
+    Route::post('/login', 'App\Controllers\AuthController@postLogin');
+    Route::get('/logout', 'App\Controllers\AuthController@getLogout');
+    Route::get('/register', 'App\Controllers\AuthController@getRegister');
+    Route::post('/register', 'App\Controllers\AuthController@postRegister');
+    Route::get('/active-account', 'App\Controllers\AuthController@getActive');
+    Route::post('/active-account', 'App\Controllers\AuthController@postActive');
+    Route::get('/verify-account{id}', 'App\Controllers\AuthController@verifyAccount');
+
+    Route::get('/about', 'App\Controllers\AboutController@viewAbout');
+
+    Route::get('/get_prod_api', 'App\Controllers\ProductController@getAllProd');
 
 
-Route::get('/login', AuthController::class . '@getLogin');
-Route::post('/login', AuthController::class . '@postLogin');
-Route::get('/logout', AuthController::class . '@getLogout');
-Route::post('/login', AuthController::class . '@postLogin');
-Route::get('/register', AuthController::class . '@getRegister');
-Route::post('/register', AuthController::class . '@postRegister');
+    Route::get('/shop', 'App\Controllers\ProductController@index');
+    Route::get('/prodselectbycat{id}', 'App\Controllers\ProductController@prodSelectByCat');
+    Route::get('/prodselectbybrand{id}', 'App\Controllers\ProductController@prodSelectByBrand');
+    Route::get('/admin/prod', 'App\Controllers\ProductController@getProd');
+    Route::get('/admin/addprod', 'App\Controllers\ProductController@addProd');
+    Route::post('/admin/addprod', 'App\Controllers\ProductController@postProd');
+    Route::get('/admin/deleteprod{id}', 'App\Controllers\ProductController@deleteProd');
+    Route::get('/admin/updateprod{id}', 'App\Controllers\ProductController@updateProd');
+    Route::post('/admin/updateprod', 'App\Controllers\ProductController@postUpdateProd');
 
-Route::get('/about', AboutController::class . '@viewAbout');
+    Route::get('/cart', 'App\Controllers\CartController@index');
+    Route::post('/addtocart', 'App\Controllers\CartController@addToCart');
+    Route::post('/updatecart', 'App\Controllers\CartController@updateCart');
+    Route::get('/deletecart{id}', 'App\Controllers\CartController@delCart');
 
-Route::get('/shop', ProductController::class . '@index');
-Route::get('/prodselectbycat/{id}', ProductController::class . '@prodSelectByCat');
-Route::get('/prodselectbybrand/{id}', ProductController::class . '@prodSelectByBrand');
-Route::get('/admin/prod', ProductController::class . '@getProd');
-Route::get('/admin/addprod', ProductController::class . '@addProd');
-Route::post('/admin/addprod', ProductController::class . '@postProd');
-Route::get('/admin/deleteprod/{id}', ProductController::class . '@deleteProd');
-Route::get('/admin/updateprod/{id}', ProductController::class . '@updateProd');
-Route::post('/admin/updateprod', ProductController::class . '@postUpdateProd');
-
-Route::get('/cart', CartController::class . '@index');
-Route::post('/addtocart', CartController::class . '@addToCart');
-Route::post('/updatecart', CartController::class . '@updateCart');
-Route::get('/deletecart/{id}', CartController::class . '@delCart');
-
-Route::get('/admin', AdminController::class . '@index');
-Route::get('/admin/cat', AdminController::class . '@getCat');
-Route::post('/admin/cat', AdminController::class . '@postCat');
-Route::get('/admin/updatecat/{id}', AdminController::class . '@updateCat');
-Route::post('/admin/updatecat', AdminController::class . '@postUpdateCat');
-Route::get('/admin/deletecat/{id}', AdminController::class . '@deleteCat');
-Route::get('/admin/brand', AdminController::class . '@getBrand');
-Route::post('/admin/brand', AdminController::class . '@postBrand');
-Route::get('/admin/updatebrand/{id}', AdminController::class . '@updateBrand');
-Route::post('/admin/updatebrand', AdminController::class . '@postUpdateBrand');
-Route::get('/admin/deletebrand/{id}', AdminController::class . '@deleteBrand');
+    Route::get('/admin', 'App\Controllers\AdminController@index');
+    Route::get('/admin/cat', 'App\Controllers\AdminController@getCat');
+    Route::post('/admin/cat', 'App\Controllers\AdminController@postCat');
+    Route::get('/admin/updatecat{id}', 'App\Controllers\AdminController@updateCat');
+    Route::post('/admin/updatecat', 'App\Controllers\AdminController@postUpdateCat');
+    Route::get('/admin/deletecat{id}', 'App\Controllers\AdminController@deleteCat');
+    Route::get('/admin/brand', 'App\Controllers\AdminController@getBrand');
+    Route::post('/admin/brand', 'App\Controllers\AdminController@postBrand');
+    Route::get('/admin/updatebrand{id}', 'App\Controllers\AdminController@updateBrand');
+    Route::post('/admin/updatebrand', 'App\Controllers\AdminController@postUpdateBrand');
+    Route::get('/admin/deletebrand{id}', 'App\Controllers\AdminController@deleteBrand');
 
 
-Route::get('/details/{id}', ProductController::class . '@showDetails');
+    Route::get('/details{id}', 'App\Controllers\VariantController@showDetails');
+    Route::get('/color_variant{id}', 'App\Controllers\VariantController@getColorVariant');
+    Route::get('/variant/delete{id}', 'App\Controllers\VariantController@deleteVariant');
+    
+    Route::get('/checkout', 'App\Controllers\CheckoutController@index');
+    Route::post('/order/offline', 'App\Controllers\CheckoutController@checkOut');
+    Route::post('/order/momo', 'App\Controllers\Checkout\QRMomo@checkOut');
+    Route::post('/order/vnpay', 'App\Controllers\Checkout\VNPay@checkOut');
 
 
-Route::resolve();
+
+    Route::resolve();
 // } catch (Exception $e) {
 //     header('Location: /notfound');
 // }
